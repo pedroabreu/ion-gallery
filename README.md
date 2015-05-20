@@ -1,6 +1,9 @@
 # ion-gallery
 Ionic gallery with slider
 
+[SS1](http://i.imgur.com/0TbxQkH.png)
+[SS2](http://i.imgur.com/n9XTXZB.png)
+
     $ bower install --save ion-gallery
 
 # Usage
