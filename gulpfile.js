@@ -5,6 +5,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+var ngAnnotate = require('gulp-ng-annotate');
 
 var paths = {
     templatecache: ['./src/templates/*.html']
@@ -29,6 +30,7 @@ gulp.task('templatecache',['lint'], function () {
 
 gulp.task('scripts', ['templatecache'], function() {
   return gulp.src('./src/js/*.js')
+    .pipe(ngAnnotate())
     .pipe(concat('ion.gallery.js'))
     .pipe(gulp.dest('./dist/'));
 });

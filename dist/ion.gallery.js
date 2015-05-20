@@ -8,6 +8,7 @@
   ionGallery.$inject = ['$ionicPlatform'];
   
   function ionGallery($ionicPlatform) {
+    controller.$inject = ["$scope"];
     return {
       restrict: 'AE',
       scope:{
@@ -57,6 +58,7 @@
 
   function ionSlider($ionicModal){
     
+    controller.$inject = ["$scope"];
     return {
       restrict: 'A',
       controller: controller,

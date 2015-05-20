@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "gulp": "^3.8.11",
+    "gulp-ng-annotate": "^0.5.3",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.0.1"
   },
