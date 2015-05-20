@@ -18,11 +18,11 @@ Add ion-gallery as dependency to your project
 
 Add gallery directive with array of photos:
 
-   <ion-gallery ion-gallery-items="items"></ion-galllery>
+    <ion-gallery ion-gallery-items="items"></ion-galllery>
 
 Data source example
 
-    [
+    $scope.items = [
       {
         src:'http://www.wired.com/images_blogs/rawfile/2013/11/offset_WaterHouseMarineImages_62652-2-660x440.jpg'
       },
