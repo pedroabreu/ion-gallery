@@ -2,7 +2,7 @@
   'use strict';
   
   angular
-    .module('ion-gallery', ['ionic','templates'])
+    .module('ion-gallery', ['templates'])
     .directive('ionGallery',ionGallery);
   
   ionGallery.$inject = ['$ionicPlatform'];
@@ -16,7 +16,7 @@
       link: link,
       controller: controller,
       replace:true,
-      templateUrl:'templates/gallery.html'
+      templateUrl:'gallery.html'
     };
     
     function controller($scope){

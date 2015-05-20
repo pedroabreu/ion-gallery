@@ -132,7 +132,7 @@
       var rename;
 
       scope.loadModal = function(){
-        $ionicModal.fromTemplateUrl('templates/slider.html', {
+        $ionicModal.fromTemplateUrl('slider.html', {
           scope: scope,
           animation: 'fade-in'
         }).then(function(modal) {
