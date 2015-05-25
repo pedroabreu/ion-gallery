@@ -78,7 +78,10 @@
     this.setRowSize = function(size){
       var length = self.getGalleryLength;
       
-      if(size > length){
+      if(isNaN(size) === true){
+        rowSize = 3;
+      }
+      else if(size > length){
         rowSize = length;
       }
       else if(size <= 0){
