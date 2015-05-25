@@ -5,9 +5,9 @@
     .module('ion-gallery')
     .directive('ionSlider',ionSlider);
 
-  ionSlider.$inject = ['$ionicModal'];
+  ionSlider.$inject = ['$ionicModal','ionService'];
 
-  function ionSlider($ionicModal){
+  function ionSlider($ionicModal,ionService){
     
     return {
       restrict: 'A',
@@ -18,15 +18,15 @@
     function controller($scope){
       var lastSlideIndex,
           currentImage,
-          galleryLength = $scope.ionGalleryItems.length;
+          galleryLength = ionService.getGalleryLength(),
+          rowSize = ionService.getRowSize();
           
-
       $scope.selectedSlide = 1;
 
       $scope.showImage = function(row,col) {
         $scope.slides = [];
         
-        currentImage = row*3 + col;
+        currentImage = row*rowSize + col;
         
         var index = currentImage;
         var previndex = index - 1;
@@ -57,9 +57,15 @@
       };
 
       $scope.slideChanged = function(currentSlideIndex) {
+        
+        if(currentSlideIndex === lastSlideIndex){
+          return;
+        }
 
         var slideToLoad,
             imageToLoad;
+        
+        console.log( 'loadSingles: ' + lastSlideIndex + ' > ' + currentSlideIndex);
         
         switch( lastSlideIndex + '>' + currentSlideIndex ) {
           case '0>1':
@@ -125,6 +131,8 @@
         $scope.slides[slideToLoad] = {
           'thumbnail': $scope.ionGalleryItems[imageToLoad].src
         };
+        
+        lastSlideIndex = currentSlideIndex;
       };
     }
 

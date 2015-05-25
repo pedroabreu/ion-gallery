@@ -2,16 +2,17 @@
   'use strict';
   
   angular
-    .module('ion-gallery', ['templates'])
+    .module('ion-gallery', [])
     .directive('ionGallery',ionGallery);
   
-  ionGallery.$inject = ['$ionicPlatform'];
+  ionGallery.$inject = ['$ionicPlatform','ionService'];
   
-  function ionGallery($ionicPlatform) {
+  function ionGallery($ionicPlatform,ionService) {
     return {
       restrict: 'AE',
       scope:{
-        ionGalleryItems: '=ionGalleryItems'
+        ionGalleryItems: '=ionGalleryItems',
+        ionGalleryRow: '=ionGalleryRow',
       },
       link: link,
       controller: controller,
@@ -20,13 +21,16 @@
     };
     
     function controller($scope){
+      
+      ionService.setGalleryLength($scope.ionGalleryItems.length);
+      ionService.setRowSize(parseInt($scope.ionGalleryRow));
+      
       var items = $scope.ionGalleryItems,
           gallery = [],
-          rowSize = 3,
+          rowSize = ionService.getRowSize(),
           row = -1,
           col = 0;
-      
-      
+            
       for(var i=0;i<items.length;i++){
         
         if(i % rowSize === 0){
@@ -38,8 +42,9 @@
         gallery[row][col] = items[i];
         col++;
       }
-
+      
       $scope.items = gallery;
+      $scope.responsiveGrid = parseInt((1/rowSize)* 100);
     }
 
     function link(scope, element, attrs) {

@@ -2,7 +2,7 @@
   <div class="row" ng-repeat="item in items">
     <img 
          ng-repeat="photo in item track by $index"
-         class="col col-33"
+         class="col col-{{responsiveGrid}}"
          ng-src="{{photo.src}}"
          ng-click="showImage({{$parent.$index}},{{$index}})">
   </div>
