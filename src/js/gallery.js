@@ -2,7 +2,7 @@
   'use strict';
   
   angular
-    .module('ion-gallery', [])
+    .module('ion-gallery', ['templates'])
     .directive('ionGallery',ionGallery);
   
   ionGallery.$inject = ['$ionicPlatform','ionService'];
