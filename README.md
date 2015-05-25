@@ -1,8 +1,7 @@
 # ion-gallery
 Ionic gallery with slider
 
-[SS1](http://i.imgur.com/0TbxQkH.png)
-[SS2](http://i.imgur.com/n9XTXZB.png)
+Demo availabe in Ionic View with id FA3E66F6
 
     $ bower install --save ion-gallery
 
@@ -36,5 +35,11 @@ Data source example
         src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'
       }
     ]
+
+# Config
+
+- ion-gallery-row: Defines number of collums to display. Default 3
+
+          <ion-gallery ion-gallery-items="items" ion-gallery-row="5"></ion-galllery>
 
 
