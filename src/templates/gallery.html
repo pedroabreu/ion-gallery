@@ -1,10 +1,11 @@
 <div>
-  <div class="row" ng-repeat="item in items">
+  <div class="row" ng-repeat="item in items" ion-image-size>
     <img 
          ng-repeat="photo in item track by $index"
          class="col col-{{responsiveGrid}}"
          ng-src="{{photo.src}}"
-         ng-click="showImage({{$parent.$index}},{{$index}})">
+         ng-click="showImage({{$parent.$index}},{{$index}})"
+         >
   </div>
   <div ion-slider></div>
 </div>

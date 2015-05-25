@@ -5,16 +5,15 @@
     .module('ion-gallery', ['templates'])
     .directive('ionGallery',ionGallery);
   
-  ionGallery.$inject = ['$ionicPlatform','ionService'];
+  ionGallery.$inject = ['$ionicPlatform','ionGalleryData'];
   
-  function ionGallery($ionicPlatform,ionService) {
+  function ionGallery($ionicPlatform,ionGalleryData) {
     return {
       restrict: 'AE',
       scope:{
         ionGalleryItems: '=ionGalleryItems',
         ionGalleryRow: '=ionGalleryRow',
       },
-      link: link,
       controller: controller,
       replace:true,
       templateUrl:'gallery.html'
@@ -22,12 +21,12 @@
     
     function controller($scope){
       
-      ionService.setGalleryLength($scope.ionGalleryItems.length);
-      ionService.setRowSize(parseInt($scope.ionGalleryRow));
+      ionGalleryData.setGalleryLength($scope.ionGalleryItems.length);
+      ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow));
       
       var items = $scope.ionGalleryItems,
           gallery = [],
-          rowSize = ionService.getRowSize(),
+          rowSize = ionGalleryData.getRowSize(),
           row = -1,
           col = 0;
             
@@ -45,9 +44,6 @@
       
       $scope.items = gallery;
       $scope.responsiveGrid = parseInt((1/rowSize)* 100);
-    }
-
-    function link(scope, element, attrs) {
     }
   }
 })();

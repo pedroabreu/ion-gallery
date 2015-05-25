@@ -5,9 +5,9 @@
     .module('ion-gallery')
     .directive('ionSlider',ionSlider);
 
-  ionSlider.$inject = ['$ionicModal','ionService'];
+  ionSlider.$inject = ['$ionicModal','ionGalleryData'];
 
-  function ionSlider($ionicModal,ionService){
+  function ionSlider($ionicModal,ionGalleryData){
     
     return {
       restrict: 'A',
@@ -18,8 +18,8 @@
     function controller($scope){
       var lastSlideIndex,
           currentImage,
-          galleryLength = ionService.getGalleryLength(),
-          rowSize = ionService.getRowSize();
+          galleryLength = ionGalleryData.getGalleryLength(),
+          rowSize = ionGalleryData.getRowSize();
           
       $scope.selectedSlide = 1;
 

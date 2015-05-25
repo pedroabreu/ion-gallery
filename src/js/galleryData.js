@@ -3,11 +3,11 @@
   
   angular
     .module('ion-gallery')
-    .service('ionService',ionService);
+    .service('ionGalleryData',ionGalleryData);
   
-  ionService.$inject = [];
+  ionGalleryData.$inject = [];
   
-  function ionService() {
+  function ionGalleryData() {
     
     var rowSize = 3,
         galleryLength,
@@ -40,7 +40,6 @@
     
     this.getRowSize = function(){
       return rowSize;
-    };
-    
+    }; 
   }
 })();
