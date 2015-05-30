@@ -22,7 +22,7 @@
           rowSize = ionGalleryData.getRowSize();
           
       $scope.selectedSlide = 1;
-
+            
       $scope.showImage = function(row,col) {
         $scope.slides = [];
         
@@ -40,15 +40,9 @@
           nextindex = 0;
         }
 
-        $scope.slides[0] = {
-          'thumbnail': $scope.ionGalleryItems[previndex].src,
-        };
-        $scope.slides[1] = {
-          'thumbnail': $scope.ionGalleryItems[index].src,
-        };
-        $scope.slides[2] = {
-          'thumbnail': $scope.ionGalleryItems[nextindex].src,
-        };
+        $scope.slides[0] = $scope.ionGalleryItems[previndex];
+        $scope.slides[1] = $scope.ionGalleryItems[index];
+        $scope.slides[2] = $scope.ionGalleryItems[nextindex];
         
         console.log( 'loadSingles: ' + previndex + ' ' + index + ' ' + nextindex);
 
@@ -128,9 +122,7 @@
           imageToLoad = imageToLoad - galleryLength;
         }
 
-        $scope.slides[slideToLoad] = {
-          'thumbnail': $scope.ionGalleryItems[imageToLoad].src
-        };
+        $scope.slides[slideToLoad] = $scope.ionGalleryItems[imageToLoad];
         
         lastSlideIndex = currentSlideIndex;
       };
@@ -138,7 +130,7 @@
 
     function link(scope, element, attrs) {
       var rename;
-
+      
       scope.loadModal = function(){
         $ionicModal.fromTemplateUrl('slider.html', {
           scope: scope,

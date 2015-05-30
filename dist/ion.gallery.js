@@ -13,7 +13,7 @@
       restrict: 'AE',
       scope:{
         ionGalleryItems: '=ionGalleryItems',
-        ionGalleryRow: '=ionGalleryRow',
+        ionGalleryRow: '=ionGalleryRow'
       },
       controller: controller,
       replace:true,
@@ -39,12 +39,17 @@
           col = 0;
         }
         
+        if(!items[i].hasOwnProperty('sub')){
+          items[i].sub = '';
+        }
+        
         gallery[row][col] = items[i];
         col++;
       }
       
       $scope.items = gallery;
       $scope.responsiveGrid = parseInt((1/rowSize)* 100);
+      
     }
   }
 })();
@@ -168,7 +173,7 @@
           rowSize = ionGalleryData.getRowSize();
           
       $scope.selectedSlide = 1;
-
+            
       $scope.showImage = function(row,col) {
         $scope.slides = [];
         
@@ -186,15 +191,9 @@
           nextindex = 0;
         }
 
-        $scope.slides[0] = {
-          'thumbnail': $scope.ionGalleryItems[previndex].src,
-        };
-        $scope.slides[1] = {
-          'thumbnail': $scope.ionGalleryItems[index].src,
-        };
-        $scope.slides[2] = {
-          'thumbnail': $scope.ionGalleryItems[nextindex].src,
-        };
+        $scope.slides[0] = $scope.ionGalleryItems[previndex];
+        $scope.slides[1] = $scope.ionGalleryItems[index];
+        $scope.slides[2] = $scope.ionGalleryItems[nextindex];
         
         console.log( 'loadSingles: ' + previndex + ' ' + index + ' ' + nextindex);
 
@@ -274,9 +273,7 @@
           imageToLoad = imageToLoad - galleryLength;
         }
 
-        $scope.slides[slideToLoad] = {
-          'thumbnail': $scope.ionGalleryItems[imageToLoad].src
-        };
+        $scope.slides[slideToLoad] = $scope.ionGalleryItems[imageToLoad];
         
         lastSlideIndex = currentSlideIndex;
       };
@@ -284,7 +281,7 @@
 
     function link(scope, element, attrs) {
       var rename;
-
+      
       scope.loadModal = function(){
         $ionicModal.fromTemplateUrl('slider.html', {
           scope: scope,
@@ -310,4 +307,4 @@
   }
 })();
 angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("gallery.html","<div class=\"gallery-view\">\n  <div class=\"row\" ng-repeat=\"item in items\" ion-row-height>\n    <div ng-repeat=\"photo in item track by $index\"\n         class=\"col col-{{responsiveGrid}} image-container\">\n      \n      <img ion-image-scale\n           ng-src=\"{{photo.src}}\"\n           ng-click=\"showImage({{$parent.$index}},{{$index}})\">\n      \n    </div>\n  </div>\n  <div ion-slider></div>\n</div>");
-$templateCache.put("slider.html","<ion-modal-view class=\"blackBackground imageView\">\n  <ion-header-bar class=\"headerView\">\n    <button class=\"button button-outline button-light close-btn\" ng-click=\"closeModal()\">Done</button>\n  </ion-header-bar>\n    \n  <ion-content scroll=\"false\">\n    <ion-slide-box does-continue=\"true\" active-slide=\"selectedSlide\" show-pager=\"false\" class=\"listContainer\" on-slide-changed=\"slideChanged($index)\">\n      <ion-slide ng-repeat=\"single in slides track by $index\">\n        <div class=\"item item-image centerPictureVertical gallery-slide-view\">\n          <img ng-src=\"{{single.thumbnail}}\">\n        </div>\n      </ion-slide>\n    </ion-slide-box>\n  </ion-content>\n</ion-modal-view>");}]);
+$templateCache.put("slider.html","<ion-modal-view class=\"blackBackground imageView\">\n  <ion-header-bar class=\"headerView\">\n    <button class=\"button button-outline button-light close-btn\" ng-click=\"closeModal()\">Done</button>\n  </ion-header-bar>\n    \n  <ion-content scroll=\"false\">\n    <ion-slide-box does-continue=\"true\" active-slide=\"selectedSlide\" show-pager=\"false\" class=\"listContainer\" on-slide-changed=\"slideChanged($index)\">\n      <ion-slide ng-repeat=\"single in slides track by $index\">\n        <div class=\"item item-image centerPictureVertical gallery-slide-view\">\n          <img ng-src=\"{{single.src}}\">\n        </div>\n        <div ng-if=\"single.sub.length > 0\" class=\"image-subtitle\">\n            <span ng-bind-html=\'single.sub\'></span>\n        </div>\n      </ion-slide>\n    </ion-slide-box>\n  </ion-content>\n</ion-modal-view>");}]);
