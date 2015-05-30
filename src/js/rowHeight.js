@@ -3,11 +3,11 @@
 
   angular
     .module('ion-gallery')
-    .directive('ionImageSize',ionImageSize);
+    .directive('ionRowHeight',ionRowHeight);
 
-  ionImageSize.$inject = [];
+  ionRowHeight.$inject = [];
 
-  function ionImageSize(){
+  function ionRowHeight(){
     
     return {
       restrict: 'A',
