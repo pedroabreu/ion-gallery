@@ -98,11 +98,40 @@
 
   angular
     .module('ion-gallery')
-    .directive('ionImageSize',ionImageSize);
+    .directive('ionImageScale',ionImageScale);
 
-  ionImageSize.$inject = [];
+  ionImageScale.$inject = [];
 
-  function ionImageSize(){
+  function ionImageScale(){
+    
+    return {
+      restrict: 'A',
+      link : link
+    };
+
+    function link(scope, element, attrs) {
+      element.bind("load" , function(e){ 
+        
+        if(this.naturalHeight > this.naturalWidth){
+            element.attr('width','100%');
+        }
+        else{
+          element.attr('height',element.parent()[0].offsetHeight+'px');
+        }
+      });
+    }
+  }
+})();
+(function(){
+  'use strict';
+
+  angular
+    .module('ion-gallery')
+    .directive('ionRowHeight',ionRowHeight);
+
+  ionRowHeight.$inject = [];
+
+  function ionRowHeight(){
     
     return {
       restrict: 'A',
@@ -280,5 +309,5 @@
     }
   }
 })();
-angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("gallery.html","<div>\n  <div class=\"row\" ng-repeat=\"item in items\" ion-image-size>\n    <img \n         ng-repeat=\"photo in item track by $index\"\n         class=\"col col-{{responsiveGrid}}\"\n         ng-src=\"{{photo.src}}\"\n         ng-click=\"showImage({{$parent.$index}},{{$index}})\"\n         >\n  </div>\n  <div ion-slider></div>\n</div>");
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("gallery.html","<div class=\"gallery-view\">\n  <div class=\"row\" ng-repeat=\"item in items\" ion-row-height>\n    <div ng-repeat=\"photo in item track by $index\"\n         class=\"col col-{{responsiveGrid}} image-container\">\n      \n      <img ion-image-scale\n           ng-src=\"{{photo.src}}\"\n           ng-click=\"showImage({{$parent.$index}},{{$index}})\">\n      \n    </div>\n  </div>\n  <div ion-slider></div>\n</div>");
 $templateCache.put("slider.html","<ion-modal-view class=\"blackBackground imageView\">\n  <ion-header-bar class=\"headerView\">\n    <button class=\"button button-outline button-light close-btn\" ng-click=\"closeModal()\">Done</button>\n  </ion-header-bar>\n    \n  <ion-content scroll=\"false\">\n    <ion-slide-box does-continue=\"true\" active-slide=\"selectedSlide\" show-pager=\"false\" class=\"listContainer\" on-slide-changed=\"slideChanged($index)\">\n      <ion-slide ng-repeat=\"single in slides track by $index\">\n        <div class=\"item item-image centerPictureVertical gallery-slide-view\">\n          <img ng-src=\"{{single.thumbnail}}\">\n        </div>\n      </ion-slide>\n    </ion-slide-box>\n  </ion-content>\n</ion-modal-view>");}]);
