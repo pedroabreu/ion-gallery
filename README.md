@@ -1,7 +1,7 @@
 # ion-gallery
 Ionic gallery with slider
 
-Demo availabe in Ionic View with id FA3E66F6
+Demo availabe in Ionic View with id 2C399CCF
 
     $ bower install --save ion-gallery
 
