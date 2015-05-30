@@ -7,7 +7,10 @@
     <ion-slide-box does-continue="true" active-slide="selectedSlide" show-pager="false" class="listContainer" on-slide-changed="slideChanged($index)">
       <ion-slide ng-repeat="single in slides track by $index">
         <div class="item item-image centerPictureVertical gallery-slide-view">
-          <img ng-src="{{single.thumbnail}}">
+          <img ng-src="{{single.src}}">
+        </div>
+        <div ng-if="single.sub.length > 0" class="image-subtitle">
+            <span ng-bind-html='single.sub'></span>
         </div>
       </ion-slide>
     </ion-slide-box>

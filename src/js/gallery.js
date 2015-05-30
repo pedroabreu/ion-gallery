@@ -12,7 +12,7 @@
       restrict: 'AE',
       scope:{
         ionGalleryItems: '=ionGalleryItems',
-        ionGalleryRow: '=ionGalleryRow',
+        ionGalleryRow: '=ionGalleryRow'
       },
       controller: controller,
       replace:true,
@@ -38,12 +38,17 @@
           col = 0;
         }
         
+        if(!items[i].hasOwnProperty('sub')){
+          items[i].sub = '';
+        }
+        
         gallery[row][col] = items[i];
         col++;
       }
       
       $scope.items = gallery;
       $scope.responsiveGrid = parseInt((1/rowSize)* 100);
+      
     }
   }
 })();
