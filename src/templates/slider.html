@@ -1,15 +1,15 @@
 <ion-modal-view class="blackBackground imageView">
   <ion-header-bar class="headerView">
-    <button class="button button-outline button-light close-btn" ng-click="closeModal()">Done</button>
+    <button class="button button-outline button-light close-btn" ng-class="{'hideAll' : hideAll === true}" ng-click="closeModal()">Done</button>
   </ion-header-bar>
     
   <ion-content scroll="false">
     <ion-slide-box does-continue="true" active-slide="selectedSlide" show-pager="false" class="listContainer" on-slide-changed="slideChanged($index)">
-      <ion-slide ng-repeat="single in slides track by $index">
+      <ion-slide on-tap="onTap(ionSliderToggle)" ng-repeat="single in slides track by $index">
         <div class="item item-image centerPictureVertical gallery-slide-view">
           <img ng-src="{{single.src}}">
         </div>
-        <div ng-if="single.sub.length > 0" class="image-subtitle">
+        <div ng-if="single.sub.length > 0" class="image-subtitle" ng-class="{'hideAll' : hideAll === true}">
             <span ng-bind-html='single.sub'></span>
         </div>
       </ion-slide>

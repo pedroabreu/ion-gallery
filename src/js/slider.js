@@ -22,7 +22,8 @@
           rowSize = ionGalleryData.getRowSize();
           
       $scope.selectedSlide = 1;
-            
+      $scope.hideAll = false;
+
       $scope.showImage = function(row,col) {
         $scope.slides = [];
         
@@ -152,6 +153,15 @@
       scope.$on('$destroy', function() {
         rename.remove();
       });
+      
+      scope.onTap = function(){
+        
+        if(scope.hasOwnProperty('ionSliderToggle') && scope.ionSliderToggle === false){
+          return;
+        }
+        
+        scope.hideAll = !scope.hideAll;
+      };
     }
   }
 })();

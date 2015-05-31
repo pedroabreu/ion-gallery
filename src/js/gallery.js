@@ -15,6 +15,7 @@
         ionGalleryRow: '=ionGalleryRow'
       },
       controller: controller,
+      link:link,
       replace:true,
       templateUrl:'gallery.html'
     };
@@ -49,6 +50,10 @@
       $scope.items = gallery;
       $scope.responsiveGrid = parseInt((1/rowSize)* 100);
       
+    }
+    
+    function link(scope,element,attrs){
+      scope.ionSliderToggle = attrs.ionGalleryToggle === 'false' ? false : true;
     }
   }
 })();
