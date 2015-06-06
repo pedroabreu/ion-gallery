@@ -9,9 +9,9 @@
   
   function ionGalleryData() {
     
-    var rowSize = 3,
-        galleryLength,
-        self = this;
+    var rowSize = 3;
+    var galleryLength;
+    var _this = this;
     
     this.setGalleryLength = function(length){
       galleryLength = length;
@@ -22,7 +22,7 @@
     };
     
     this.setRowSize = function(size){
-      var length = self.getGalleryLength;
+      var length = _this.getGalleryLength;
       
       if(isNaN(size) === true){
         rowSize = 3;

@@ -5,9 +5,9 @@
     .module('ion-gallery')
     .directive('ionSlider',ionSlider);
 
-  ionSlider.$inject = ['$ionicModal','ionGalleryData'];
+  ionSlider.$inject = ['$ionicModal','ionGalleryData','$timeout','$ionicScrollDelegate'];
 
-  function ionSlider($ionicModal,ionGalleryData){
+  function ionSlider($ionicModal,ionGalleryData,$timeout,$ionicScrollDelegate){
     
     return {
       restrict: 'A',
@@ -16,14 +16,15 @@
     };
     
     function controller($scope){
-      var lastSlideIndex,
-          currentImage,
-          galleryLength = ionGalleryData.getGalleryLength(),
-          rowSize = ionGalleryData.getRowSize();
+      var lastSlideIndex;
+      var currentImage;
+      var galleryLength = ionGalleryData.getGalleryLength();
+      var rowSize = ionGalleryData.getRowSize();
+      var zoomStart = false;
           
       $scope.selectedSlide = 1;
       $scope.hideAll = false;
-
+      
       $scope.showImage = function(row,col) {
         $scope.slides = [];
         
@@ -57,50 +58,44 @@
           return;
         }
 
-        var slideToLoad,
-            imageToLoad;
+        var slideToLoad = $scope.slides.length - lastSlideIndex - currentSlideIndex;
+        var imageToLoad;
         
         console.log( 'loadSingles: ' + lastSlideIndex + ' > ' + currentSlideIndex);
         
         switch( lastSlideIndex + '>' + currentSlideIndex ) {
           case '0>1':
             {
-              slideToLoad = 2;
               currentImage++;
               imageToLoad = currentImage + 1;
               break;
             }
           case '1>2':
             {
-              slideToLoad = 0;
               currentImage++;
               imageToLoad = currentImage + 1;
               break;
             }
           case '2>0':
             {
-              slideToLoad = 1;
               currentImage++;
               imageToLoad = currentImage + 1;
               break;
             }
           case '0>2':
             {
-              slideToLoad = 1;
               currentImage--;
               imageToLoad = currentImage - 1;
               break;
             }
           case '1>0':
             {
-              slideToLoad = 2;
               currentImage--;
               imageToLoad = currentImage - 1;
               break;
             }
           case '2>1':
             {
-              slideToLoad = 0;
               currentImage--;
               imageToLoad = currentImage - 1;   
               break;
@@ -123,45 +118,105 @@
           imageToLoad = imageToLoad - galleryLength;
         }
 
+        //Clear zoom
+        $ionicScrollDelegate.$getByHandle('slide-' + slideToLoad).zoomTo(1);
+        
         $scope.slides[slideToLoad] = $scope.ionGalleryItems[imageToLoad];
         
         lastSlideIndex = currentSlideIndex;
       };
+      
+      $scope.$on('ZoomStarted', function(e){
+        $timeout(function () {
+          zoomStart = true;
+          $scope.hideAll = true;
+        });
+        
+      });
+      
+      $scope.$on('ZoomOriginal', function(e){
+        $timeout(function () {
+          _isOriginalSize();
+        },300);
+        
+      });
+      
+      $scope.$on('TapEvent', function(e){
+        $timeout(function () {
+          _onTap();
+        });
+        
+      });
+      
+      $scope.$on('DoubleTapEvent', function(event,position){
+        $timeout(function () {
+          _onDoubleTap(position);
+        });
+        
+      });
+      
+      var _onTap = function _onTap(){
+        
+        if(zoomStart === true){
+          $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).zoomTo(1,true);
+          
+          $timeout(function () {
+            _isOriginalSize();
+          },300);
+          
+          return;
+        }
+        
+        if(($scope.hasOwnProperty('ionSliderToggle') && $scope.ionSliderToggle === false && $scope.hideAll === false) || zoomStart === true){
+          return;
+        }
+        
+        $scope.hideAll = !$scope.hideAll;
+      };
+      
+      var _onDoubleTap = function _onDoubleTap(position){
+        if(zoomStart === false){
+          $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).zoomTo(3,true,position.x,position.y);
+          zoomStart = true;
+          $scope.hideAll = true;
+        }
+        else{
+          _onTap();
+        }
+      };
+      
+      function _isOriginalSize(){
+        zoomStart = false;
+        _onTap();
+      }
+      
     }
 
     function link(scope, element, attrs) {
-      var rename;
-      
+      var _modal;
+
       scope.loadModal = function(){
         $ionicModal.fromTemplateUrl('slider.html', {
           scope: scope,
           animation: 'fade-in'
         }).then(function(modal) {
-          rename = modal;
+          _modal = modal;
           scope.openModal();
         });
       };
 
       scope.openModal = function() {
-        rename.show();
+        _modal.show();
       };
 
       scope.closeModal = function() {
-        rename.hide();
+        _modal.hide();
       };
 
       scope.$on('$destroy', function() {
-        rename.remove();
+        _modal.remove();
       });
       
-      scope.onTap = function(){
-        
-        if(scope.hasOwnProperty('ionSliderToggle') && scope.ionSliderToggle === false){
-          return;
-        }
-        
-        scope.hideAll = !scope.hideAll;
-      };
     }
   }
 })();

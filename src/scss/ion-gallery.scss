@@ -19,6 +19,10 @@
 .imageView{
   background-color:black;
   
+  .has-no-header{
+    top:0px !important;
+  }
+  
   .close-btn{
     font-weight: 900;
     border:2px solid;
@@ -30,19 +34,6 @@
   .headerView{
     background-image:none;
     background-color: black;
-  }
-  
-  .centerPictureVertical{
-    top: 45%;
-    -webkit-transform: translateY(-45%);
-    -moz-transform: translateY(-45%);
-    -ms-transform: translateY(-45%);
-    -o-transform: translateY(-45%);
-    transform: translateY(-45%);
-    margin:0 auto;
-    width: auto;
-    border: none;
-    background-color: transparent;
   }
   
   .gallery-slide-view{
@@ -66,6 +57,50 @@
   }
   
   .hideAll{
-    display: none;
+    display:none;
+  }
+  
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .scroll-view {
+    position: absolute;
+    width: 100%;
+    height:100%;
+  }
+
+  .scroll-view .scroll {
+    min-height: 100%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
 }

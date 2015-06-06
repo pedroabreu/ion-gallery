@@ -1,17 +1,28 @@
 <ion-modal-view class="blackBackground imageView">
-  <ion-header-bar class="headerView">
-    <button class="button button-outline button-light close-btn" ng-class="{'hideAll' : hideAll === true}" ng-click="closeModal()">Done</button>
+  <ion-header-bar class="headerView" ng-show="!hideAll">
+    <button class="button button-outline button-light close-btn" ng-click="closeModal()">Done</button>
   </ion-header-bar>
     
-  <ion-content scroll="false">
+  <ion-content class="has-no-header" scroll="false">
     <ion-slide-box does-continue="true" active-slide="selectedSlide" show-pager="false" class="listContainer" on-slide-changed="slideChanged($index)">
-      <ion-slide on-tap="onTap(ionSliderToggle)" ng-repeat="single in slides track by $index">
+      <ion-slide ng-repeat="single in slides track by $index">
+        <ion-scroll direction="xy"
+                    locking="false" 
+                    zooming="true"
+                    min-zoom="1"
+                    scrollbar-x="false"
+                    scrollbar-y="false"
+                    class="animate modal-content"
+                    ion-slide-action
+                    delegate-handle="slide-{{::$index}}"
+                    >
         <div class="item item-image centerPictureVertical gallery-slide-view">
           <img ng-src="{{single.src}}">
         </div>
-        <div ng-if="single.sub.length > 0" class="image-subtitle" ng-class="{'hideAll' : hideAll === true}">
+        <div ng-if="single.sub.length > 0" class="image-subtitle" ng-show="!hideAll">
             <span ng-bind-html='single.sub'></span>
         </div>
+        </ion-scroll>
       </ion-slide>
     </ion-slide-box>
   </ion-content>

@@ -25,11 +25,11 @@
       ionGalleryData.setGalleryLength($scope.ionGalleryItems.length);
       ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow));
       
-      var items = $scope.ionGalleryItems,
-          gallery = [],
-          rowSize = ionGalleryData.getRowSize(),
-          row = -1,
-          col = 0;
+      var items = $scope.ionGalleryItems;
+      var gallery = [];
+      var rowSize = ionGalleryData.getRowSize();
+      var row = -1;
+      var col = 0;
             
       for(var i=0;i<items.length;i++){
         
