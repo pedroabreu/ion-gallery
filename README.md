@@ -1,9 +1,14 @@
 # ion-gallery
 Ionic gallery with slider
 
-Demo availabe in Ionic View with id B6C43412
+Demo availabe in Ionic View with id 150745FE
 
     $ bower install --save ion-gallery
+
+# Features
+
+ - Define number of collums to present (1 to array length)
+ - Pinch and double tap do zoom on picture
 
 # Usage
 
