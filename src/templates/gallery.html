@@ -1,11 +1,11 @@
 <div class="gallery-view">
-  <div class="row" ng-repeat="item in ::items" ion-row-height>
-    <div ng-repeat="photo in ::item track by $index"
-         class="col col-{{::responsiveGrid}} image-container">
+  <div class="row" ng-repeat="item in items track by $index" ion-row-height>
+    <div ng-repeat="photo in item track by $index"
+         class="col col-{{responsiveGrid}} image-container">
       
       <img ion-image-scale
-           ng-src="{{::photo.src}}"
-           ng-click="showImage({{::$parent.$index}},{{::$index}})">
+           ng-src="{{photo.src}}"
+           ng-click="showImage({{$parent.$index}},{{$index}})">
       
     </div>
   </div>

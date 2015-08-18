@@ -5,9 +5,9 @@
     .module('ion-gallery')
     .directive('ionSlider',ionSlider);
 
-  ionSlider.$inject = ['$ionicModal','ionGalleryData','$timeout','$ionicScrollDelegate'];
+  ionSlider.$inject = ['$ionicModal','ionGalleryData','$ionicPlatform','$timeout','$ionicScrollDelegate'];
 
-  function ionSlider($ionicModal,ionGalleryData,$timeout,$ionicScrollDelegate){
+  function ionSlider($ionicModal,ionGalleryData,$ionicPlatform,$timeout,$ionicScrollDelegate){
     
     return {
       restrict: 'A',
@@ -18,7 +18,7 @@
     function controller($scope){
       var lastSlideIndex;
       var currentImage;
-      var galleryLength = ionGalleryData.getGalleryLength();
+      
       var rowSize = ionGalleryData.getRowSize();
       var zoomStart = false;
           
@@ -30,6 +30,7 @@
         
         currentImage = row*rowSize + col;
         
+        var galleryLength = ionGalleryData.getGalleryLength();
         var index = currentImage;
         var previndex = index - 1;
         var nextindex = index + 1;
@@ -59,6 +60,7 @@
         }
 
         var slideToLoad = $scope.slides.length - lastSlideIndex - currentSlideIndex;
+        var galleryLength = ionGalleryData.getGalleryLength();
         var imageToLoad;
         
         console.log( 'loadSingles: ' + lastSlideIndex + ' > ' + currentSlideIndex);
@@ -125,7 +127,7 @@
         
         lastSlideIndex = currentSlideIndex;
       };
-      
+            
       $scope.$on('ZoomStarted', function(e){
         $timeout(function () {
           zoomStart = true;
@@ -216,6 +218,7 @@
       scope.$on('$destroy', function() {
         _modal.remove();
       });
+      
       
     }
   }

@@ -21,34 +21,27 @@
     };
     
     function controller($scope){
-      
-      ionGalleryData.setGalleryLength($scope.ionGalleryItems.length);
+      ionGalleryData.setGallery($scope.ionGalleryItems);
       ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow));
       
-      var items = $scope.ionGalleryItems;
-      var gallery = [];
-      var rowSize = ionGalleryData.getRowSize();
-      var row = -1;
-      var col = 0;
-            
-      for(var i=0;i<items.length;i++){
-        
-        if(i % rowSize === 0){
-          row++;
-          gallery[row] = [];
-          col = 0;
-        }
-        
-        if(!items[i].hasOwnProperty('sub')){
-          items[i].sub = '';
-        }
-        
-        gallery[row][col] = items[i];
-        col++;
-      }
+      var _drawGallery = function(){
+        $scope.items = ionGalleryData.buildGallery();
+        $scope.responsiveGrid = ionGalleryData.getGridSize();
+      };
       
-      $scope.items = gallery;
-      $scope.responsiveGrid = parseInt((1/rowSize)* 100);
+      _drawGallery();
+      
+      (function () {
+        $scope.$watch(function () {
+          return $scope.ionGalleryItems.length;
+        }, function (newVal, oldVal) {
+          if(newVal !== oldVal){
+            ionGalleryData.setGallery($scope.ionGalleryItems);
+            _drawGallery();
+            
+          }
+        });
+      }());
       
     }
     

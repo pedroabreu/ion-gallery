@@ -12,9 +12,8 @@
                     min-zoom="1"
                     scrollbar-x="false"
                     scrollbar-y="false"
-                    class="animate modal-content"
                     ion-slide-action
-                    delegate-handle="slide-{{::$index}}"
+                    delegate-handle="slide-{{$index}}"
                     >
         <div class="item item-image centerPictureVertical gallery-slide-view">
           <img ng-src="{{single.src}}">
