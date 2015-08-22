@@ -46,6 +46,8 @@ Data source example
 Subtitle property is optional. If no property present, nothing is showed (Same for empty string).
 Supports html tags.
 
+UI will reflect changes on the content object passed to the directive. Example of adding and removing pictures can be seen in the ionic view app.
+
 # Config
 
 - ion-gallery-row: Defines number of collums to display. Default 3
