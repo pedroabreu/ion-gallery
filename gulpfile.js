@@ -43,17 +43,17 @@ gulp.task('templatecache',['lint'], function () {
 gulp.task('scripts', ['templatecache'], function() {
   return gulp.src('./src/js/*.js')
     .pipe(ngAnnotate())
-    .pipe(concat('ion.gallery.js'))
+    .pipe(concat('ion-gallery.js'))
     .pipe(gulp.dest('./.tmp/'));
 });
 
 gulp.task('compress',['scripts'], function() {
   return gulp.src('./.tmp/*.js')
-    .pipe(concat('ion.gallery.js'))
+    .pipe(concat('ion-gallery.js'))
     .pipe(gulp.dest('./dist'))
     .pipe(stripDebug())
     .pipe(uglify())
-    .pipe(rename('ion.gallery.min.js'))
+    .pipe(rename('ion-gallery.min.js'))
     .pipe(gulp.dest('./dist'));
 });
 

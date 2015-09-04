@@ -10,15 +10,15 @@
   function ionGalleryData() {
     
     var rowSize = 3;
+    var _this = this;
     var galleryLength;
     var gallery;
-    var _this = this;
     
     _this.setGalleryLength = function(length){
       galleryLength = length;
     };
     
-    this.getGalleryLength = function(){
+    this.getGalleryLength = function (){
       return galleryLength;
     };
     
