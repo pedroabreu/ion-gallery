@@ -326,46 +326,17 @@
         var slideToLoad = $scope.slides.length - lastSlideIndex - currentSlideIndex;
         var galleryLength = ionGalleryData.getGalleryLength();
         var imageToLoad;
+        var slidePosition;
         
         console.log( 'loadSingles: ' + lastSlideIndex + ' > ' + currentSlideIndex);
         
-        switch( lastSlideIndex + '>' + currentSlideIndex ) {
-          case '0>1':
-            {
-              currentImage++;
-              imageToLoad = currentImage + 1;
-              break;
-            }
-          case '1>2':
-            {
-              currentImage++;
-              imageToLoad = currentImage + 1;
-              break;
-            }
-          case '2>0':
-            {
-              currentImage++;
-              imageToLoad = currentImage + 1;
-              break;
-            }
-          case '0>2':
-            {
-              currentImage--;
-              imageToLoad = currentImage - 1;
-              break;
-            }
-          case '1>0':
-            {
-              currentImage--;
-              imageToLoad = currentImage - 1;
-              break;
-            }
-          case '2>1':
-            {
-              currentImage--;
-              imageToLoad = currentImage - 1;   
-              break;
-            }
+        if(slidePosition === '0>1' || slidePosition === '1>2' || slidePosition === '2>0'){
+          currentImage++;
+          imageToLoad = currentImage + 1;
+        }
+        else if(slidePosition === '0>2' || slidePosition === '1>0' || slidePosition === '2>1'){
+          currentImage--;
+          imageToLoad = currentImage - 1;
         }
 
         if( currentImage < 0 ){
