@@ -343,7 +343,7 @@
           currentImage = galleryLength - 1;
         }
 
-        if( currentImage > galleryLength ){
+        if( currentImage >= galleryLength ){
           currentImage = 0;
         }
 
