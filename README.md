@@ -25,7 +25,7 @@ Add ion-gallery as dependency to your project
 
 Add gallery directive with array of photos:
 
-    <ion-gallery ion-gallery-items="items"></ion-galllery>
+    <ion-gallery ion-gallery-items="items"></ion-gallery>
 
 Data source example
 
@@ -42,7 +42,7 @@ Data source example
         src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'
       }
     ]
-    
+
 Subtitle property is optional. If no property present, nothing is showed (Same for empty string).
 Supports html tags.
 
