@@ -50,6 +50,14 @@ UI will reflect changes on the content object passed to the directive. Example o
 
 # Config
 
+- label customization:
+
+```
+app.config(function(ionGalleryConfigProvider) {
+  ionGalleryConfigProvider.setLabels({done: 'Close'});
+});
+```
+
 - ion-gallery-row: Defines number of collums to display. Default 3
 
           <ion-gallery ion-gallery-items="items" ion-gallery-row="5"></ion-galllery>
