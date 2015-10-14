@@ -62,9 +62,9 @@
         var slideToLoad = $scope.slides.length - lastSlideIndex - currentSlideIndex;
         var galleryLength = ionGalleryData.getGalleryLength();
         var imageToLoad;
-        var slidePosition;
+        var slidePosition = lastSlideIndex + '>' + currentSlideIndex;
         
-        console.log( 'loadSingles: ' + lastSlideIndex + ' > ' + currentSlideIndex);
+        console.log( 'loadSingles: ' + slidePosition);
         
         if(slidePosition === '0>1' || slidePosition === '1>2' || slidePosition === '2>0'){
           currentImage++;
@@ -187,10 +187,12 @@
       };
 
       scope.$on('$destroy', function() {
-        _modal.remove();
+        try{
+          _modal.remove();
+        } catch(err) {
+          console.log(err.message);
+        }
       });
-      
-      
     }
   }
 })();
