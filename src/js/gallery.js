@@ -3,24 +3,7 @@
 
   angular
     .module('ion-gallery', ['templates'])
-    .directive('ionGallery',ionGallery)
-    .provider('ionGalleryConfig',ionGalleryConfig);
-
-  ionGalleryConfig.$inject = [];
-
-  function ionGalleryConfig(){
-    this.labels = {
-      done: 'Done'
-    };
-
-    this.$get = function() {
-        return this.labels;
-    };
-
-    this.setLabels = function(labels) {
-        this.labels = labels;
-    };
-  }
+    .directive('ionGallery',ionGallery);
 
   ionGallery.$inject = ['$ionicPlatform','ionGalleryData','ionGalleryConfig'];
 
@@ -40,11 +23,11 @@
     function controller($scope){
       ionGalleryData.setGallery($scope.ionGalleryItems);
       ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow));
+      $scope.actionLabel = ionGalleryConfig.action_label;
 
       var _drawGallery = function(){
         $scope.items = ionGalleryData.buildGallery();
         $scope.responsiveGrid = ionGalleryData.getGridSize();
-        $scope.labels = ionGalleryConfig.labels;
       };
 
       _drawGallery();
@@ -64,7 +47,7 @@
     }
 
     function link(scope,element,attrs){
-      scope.ionSliderToggle = attrs.ionGalleryToggle === 'false' ? false : true;
+      scope.ionSliderToggle = attrs.ionGalleryToggle === 'false' ? false : ionGalleryConfig.toggle;
     }
   }
 })();
