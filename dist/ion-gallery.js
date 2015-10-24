@@ -185,13 +185,29 @@
     };
 
     function link(scope, element, attrs) {
-      element.bind("load" , function(e){ 
-        
-        if(this.naturalHeight > this.naturalWidth){
+      
+      var scaleImage = function(context,value) {
+        if(value>0){
+          if(context.naturalHeight > context.naturalWidth){
             element.attr('width','100%');
+          }
+          else{
+            element.attr('height',element.parent()[0].offsetHeight+'px');
+          }
+        } 
+      }
+      
+      element.bind("load" , function(e){
+        if(element.parent()[0].offsetHeight > 0){
+          scaleImage(this,element.parent()[0].offsetHeight);
         }
         else{
-          element.attr('height',element.parent()[0].offsetHeight+'px');
+          var _this = this;
+          scope.$watch(function(){
+            return element.parent()[0].offsetHeight;
+          },function(newValue){
+            scaleImage(_this,newValue);
+          })
         }
       });
     }
@@ -214,7 +230,16 @@
     };
 
     function link(scope, element, attrs) {
-      element.css('height',element[0].offsetWidth * parseInt(scope.$parent.responsiveGrid)/100 + 'px'); 
+            
+      scope.$watch( 
+        function(){
+          return element[0].offsetWidth;
+        },
+        function(newValue){
+          if(newValue > 0){
+            element.css('height',newValue * parseInt(scope.$parent.responsiveGrid)/100 + 'px');
+          }
+        });
     }
   }
 })();

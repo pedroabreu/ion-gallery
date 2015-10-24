@@ -15,7 +15,16 @@
     };
 
     function link(scope, element, attrs) {
-      element.css('height',element[0].offsetWidth * parseInt(scope.$parent.responsiveGrid)/100 + 'px'); 
+            
+      scope.$watch( 
+        function(){
+          return element[0].offsetWidth;
+        },
+        function(newValue){
+          if(newValue > 0){
+            element.css('height',newValue * parseInt(scope.$parent.responsiveGrid)/100 + 'px');
+          }
+        });
     }
   }
 })();
