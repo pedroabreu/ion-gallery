@@ -77,8 +77,8 @@ Markup overrides provider definitions
 
 - ion-gallery-row: Defines number of collums to display. Default 3
 
-          <ion-gallery ion-gallery-items="items" ion-gallery-row="5"></ion-galllery>
+          <ion-gallery ion-gallery-items="items" ion-gallery-row="5"></ion-gallery>
 
 - ion-gallery-toggle: Sets one tap action on slideshow to hide/show subtitles and "Done" button. Default: true
 
-          <ion-gallery ion-gallery-items="items" ion-gallery-toggle="false"></ion-galllery>
+          <ion-gallery ion-gallery-items="items" ion-gallery-toggle="false"></ion-gallery>
