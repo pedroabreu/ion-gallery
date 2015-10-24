@@ -22,7 +22,7 @@
 
     function controller($scope){
       ionGalleryData.setGallery($scope.ionGalleryItems);
-      ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow));
+      ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow) || ionGalleryConfig.row_size);
       $scope.actionLabel = ionGalleryConfig.action_label;
 
       var _drawGallery = function(){

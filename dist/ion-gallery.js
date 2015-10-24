@@ -23,7 +23,7 @@
 
     function controller($scope){
       ionGalleryData.setGallery($scope.ionGalleryItems);
-      ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow));
+      ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow) || ionGalleryConfig.row_size);
       $scope.actionLabel = ionGalleryConfig.action_label;
 
       var _drawGallery = function(){
@@ -65,7 +65,8 @@
   function ionGalleryConfig(){
     this.config = {
       action_label: 'Done',
-      toggle: true
+      toggle: true,
+      row_size: 3
     };
 
     this.$get = function() {
@@ -85,25 +86,25 @@
     .module('ion-gallery')
     .service('ionGalleryData',ionGalleryData);
   
-  ionGalleryData.$inject = [];
+  ionGalleryData.$inject = ['ionGalleryConfig'];
   
-  function ionGalleryData() {
+  function ionGalleryData(ionGalleryConfig) {
     
-    var rowSize = 3;
-    var _this = this;
     var galleryLength;
     var gallery;
+    var _this = this;
     
     _this.setGalleryLength = function(length){
       galleryLength = length;
     };
     
-    this.getGalleryLength = function (){
+    this.getGalleryLength = function(){
       return galleryLength;
     };
     
     this.setRowSize = function(size){
       var length = _this.getGalleryLength;
+      var rowSize;
       
       if(isNaN(size) === true){
         rowSize = 3;
@@ -117,10 +118,13 @@
       else{
         rowSize = size;
       }
+      
+      ionGalleryConfig.row_size = rowSize;
+      
     };
     
     this.getRowSize = function(){
-      return rowSize;
+      return ionGalleryConfig.row_size;
     };
     
     this.setGallery = function(items){
@@ -299,7 +303,6 @@
 
   function ionSlider($ionicModal,ionGalleryData,$ionicPlatform,$timeout,$ionicScrollDelegate){
     
-
     controller.$inject = ["$scope"];
     return {
       restrict: 'A',

@@ -5,25 +5,25 @@
     .module('ion-gallery')
     .service('ionGalleryData',ionGalleryData);
   
-  ionGalleryData.$inject = [];
+  ionGalleryData.$inject = ['ionGalleryConfig'];
   
-  function ionGalleryData() {
+  function ionGalleryData(ionGalleryConfig) {
     
-    var rowSize = 3;
-    var _this = this;
     var galleryLength;
     var gallery;
+    var _this = this;
     
     _this.setGalleryLength = function(length){
       galleryLength = length;
     };
     
-    this.getGalleryLength = function (){
+    this.getGalleryLength = function(){
       return galleryLength;
     };
     
     this.setRowSize = function(size){
       var length = _this.getGalleryLength;
+      var rowSize;
       
       if(isNaN(size) === true){
         rowSize = 3;
@@ -37,10 +37,13 @@
       else{
         rowSize = size;
       }
+      
+      ionGalleryConfig.row_size = rowSize;
+      
     };
     
     this.getRowSize = function(){
-      return rowSize;
+      return ionGalleryConfig.row_size;
     };
     
     this.setGallery = function(items){

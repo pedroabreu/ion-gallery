@@ -58,9 +58,17 @@ Default values in example.
 app.config(function(ionGalleryConfigProvider) {
   ionGalleryConfigProvider.setGalleryConfig({
                           action_label: 'Close',
-                          toggle: false
+                          toggle: false,
+                          row_size: 3
   });
 });
+```
+
+```
+Default values
+action_label - 'Close' (String)
+toggle - false (Boolean)
+row_zie - 3 (Int)
 ```
 
 - Via markup:

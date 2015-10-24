@@ -10,7 +10,8 @@
   function ionGalleryConfig(){
     this.config = {
       action_label: 'Done',
-      toggle: true
+      toggle: true,
+      row_size: 3
     };
 
     this.$get = function() {
