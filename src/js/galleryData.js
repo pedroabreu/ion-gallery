@@ -74,6 +74,8 @@
           items[i].sub = '';
         }
         
+        items[i].position = i;
+        
         _gallery[row][col] = items[i];
         col++;
       }

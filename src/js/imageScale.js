@@ -25,7 +25,7 @@
             element.attr('height',element.parent()[0].offsetHeight+'px');
           }
         } 
-      }
+      };
       
       element.bind("load" , function(e){
         if(element.parent()[0].offsetHeight > 0){
@@ -37,7 +37,7 @@
             return element.parent()[0].offsetHeight;
           },function(newValue){
             scaleImage(_this,newValue);
-          })
+          });
         }
       });
     }

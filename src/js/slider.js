@@ -25,23 +25,14 @@
       $scope.selectedSlide = 1;
       $scope.hideAll = false;
       
-      $scope.showImage = function(row,col) {
+      $scope.showImage = function(index) {
         $scope.slides = [];
         
-        currentImage = row*rowSize + col;
+        currentImage = index;
         
         var galleryLength = ionGalleryData.getGalleryLength();
-        var index = currentImage;
-        var previndex = index - 1;
-        var nextindex = index + 1;
-
-        if( previndex < 0 ){
-          previndex = galleryLength - 1;
-        }
-
-        if( nextindex >= galleryLength ){
-          nextindex = 0;
-        }
+        var previndex = index - 1 < 0 ? galleryLength - 1 : index - 1;
+        var nextindex = index + 1 >= galleryLength ? 0 : index + 1;
 
         $scope.slides[0] = $scope.ionGalleryItems[previndex];
         $scope.slides[1] = $scope.ionGalleryItems[index];

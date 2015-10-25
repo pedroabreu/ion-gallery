@@ -155,6 +155,8 @@
           items[i].sub = '';
         }
         
+        items[i].position = i;
+        
         _gallery[row][col] = items[i];
         col++;
       }
@@ -195,7 +197,7 @@
             element.attr('height',element.parent()[0].offsetHeight+'px');
           }
         } 
-      }
+      };
       
       element.bind("load" , function(e){
         if(element.parent()[0].offsetHeight > 0){
@@ -207,7 +209,7 @@
             return element.parent()[0].offsetHeight;
           },function(newValue){
             scaleImage(_this,newValue);
-          })
+          });
         }
       });
     }
@@ -345,23 +347,14 @@
       $scope.selectedSlide = 1;
       $scope.hideAll = false;
       
-      $scope.showImage = function(row,col) {
+      $scope.showImage = function(index) {
         $scope.slides = [];
         
-        currentImage = row*rowSize + col;
+        currentImage = index;
         
         var galleryLength = ionGalleryData.getGalleryLength();
-        var index = currentImage;
-        var previndex = index - 1;
-        var nextindex = index + 1;
-
-        if( previndex < 0 ){
-          previndex = galleryLength - 1;
-        }
-
-        if( nextindex >= galleryLength ){
-          nextindex = 0;
-        }
+        var previndex = index - 1 < 0 ? galleryLength - 1 : index - 1;
+        var nextindex = index + 1 >= galleryLength ? 0 : index + 1;
 
         $scope.slides[0] = $scope.ionGalleryItems[previndex];
         $scope.slides[1] = $scope.ionGalleryItems[index];
@@ -516,5 +509,5 @@
     }
   }
 })();
-angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("gallery.html","<div class=\"gallery-view\">\n  <div class=\"row\" ng-repeat=\"item in items track by $index\" ion-row-height>\n    <div ng-repeat=\"photo in item track by $index\"\n         class=\"col col-{{responsiveGrid}} image-container\">\n      \n      <img ion-image-scale\n           ng-src=\"{{photo.src}}\"\n           ng-click=\"showImage({{$parent.$index}},{{$index}})\">\n      \n    </div>\n  </div>\n  <div ion-slider></div>\n</div>");
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("gallery.html","<div class=\"gallery-view\">\n  <div class=\"row\" ng-repeat=\"item in items track by $index\" ion-row-height>\n    <div ng-repeat=\"photo in item track by $index\"\n         class=\"col col-{{responsiveGrid}} image-container\">\n      \n      <img ion-image-scale\n           ng-src=\"{{photo.src}}\"\n           ng-click=\"showImage({{photo.position}})\">\n      \n    </div>\n  </div>\n  <div ion-slider></div>\n</div>");
 $templateCache.put("slider.html","<ion-modal-view class=\"imageView\">\n  <ion-header-bar class=\"headerView\" ng-show=\"!hideAll\">\n    <button class=\"button button-outline button-light close-btn\" ng-click=\"closeModal()\">{{::actionLabel}}</button>\n  </ion-header-bar>\n\n  <ion-content class=\"has-no-header\" scroll=\"false\">\n    <ion-slide-box does-continue=\"true\" active-slide=\"selectedSlide\" show-pager=\"false\" class=\"listContainer\" on-slide-changed=\"slideChanged($index)\">\n      <ion-slide ng-repeat=\"single in slides track by $index\">\n        <ion-scroll direction=\"xy\"\n                    locking=\"false\"\n                    zooming=\"true\"\n                    min-zoom=\"1\"\n                    scrollbar-x=\"false\"\n                    scrollbar-y=\"false\"\n                    ion-slide-action\n                    delegate-handle=\"slide-{{$index}}\"\n                    >\n        <div class=\"item item-image gallery-slide-view\">\n          <img ng-src=\"{{single.src}}\">\n        </div>\n        <div ng-if=\"single.sub.length > 0\" class=\"image-subtitle\" ng-show=\"!hideAll\">\n            <span ng-bind-html=\'single.sub\'></span>\n        </div>\n        </ion-scroll>\n      </ion-slide>\n    </ion-slide-box>\n  </ion-content>\n</ion-modal-view>\n");}]);
