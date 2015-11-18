@@ -74,6 +74,10 @@
           items[i].sub = '';
         }
         
+        if(!items[i].hasOwnProperty('thumb')){
+          items[i].thumb = items[i].src;
+        }
+        
         items[i].position = i;
         
         _gallery[row][col] = items[i];
