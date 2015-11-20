@@ -39,9 +39,12 @@ Data source example
         sub: '' /* Not showed */
       },
       {
-        src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg'
+        src:'http://www.hdwallpapersimages.com/wp-content/uploads/2014/01/Winter-Tiger-Wild-Cat-Images.jpg',
+        thumb:'http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg'
       }
     ]
+
+Thumbnail property is also optional. If no thumbnail, the source content will be used
 
 Subtitle property is optional. If no property present, nothing is showed (Same for empty string).
 Supports html tags.
