@@ -18,7 +18,7 @@
       
       var scaleImage = function(context,value) {
         if(value>0){
-          if(context.naturalHeight > context.naturalWidth){
+          if(context.naturalHeight >= context.naturalWidth){
             element.attr('width','100%');
           }
           else{
