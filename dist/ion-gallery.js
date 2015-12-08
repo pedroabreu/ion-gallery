@@ -167,7 +167,7 @@
             element.attr('height',element.parent()[0].offsetHeight+'px');
           }
         } 
-      }
+      };
       
       element.bind("load" , function(e){
         if(element.parent()[0].offsetHeight > 0){
@@ -179,7 +179,7 @@
             return element.parent()[0].offsetHeight;
           },function(newValue){
             scaleImage(_this,newValue);
-          })
+          });
         }
       });
     }
@@ -467,10 +467,12 @@
       };
 
       scope.$on('$destroy', function() {
-        _modal.remove();
+        try{
+          _modal.remove();
+        } catch(err) {
+          console.log(err.message);
+        }
       });
-      
-      
     }
   }
 })();
