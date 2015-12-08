@@ -30,7 +30,7 @@
       var imageDoubleTapGesture = function imageDoubleTapGesture(event) {
         
         isDoubleTapAction = true;
-                
+        
         $timeout(function(){
           isDoubleTapAction = false;
           scope.$emit('DoubleTapEvent',{ 'x': event.gesture.touches[0].pageX, 'y': event.gesture.touches[0].pageY});

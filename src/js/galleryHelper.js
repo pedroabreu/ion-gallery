@@ -3,26 +3,15 @@
   
   angular
     .module('ion-gallery')
-    .service('ionGalleryData',ionGalleryData);
+    .service('ionGalleryHelper',ionGalleryHelper);
   
-  ionGalleryData.$inject = ['ionGalleryConfig'];
+  ionGalleryHelper.$inject = ['ionGalleryConfig'];
   
-  function ionGalleryData(ionGalleryConfig) {
+  function ionGalleryHelper(ionGalleryConfig) {
     
-    var galleryLength;
-    var gallery;
     var _this = this;
-    
-    _this.setGalleryLength = function(length){
-      galleryLength = length;
-    };
-    
-    this.getGalleryLength = function(){
-      return galleryLength;
-    };
-    
-    this.setRowSize = function(size){
-      var length = _this.getGalleryLength;
+
+    this.getRowSize = function(size,length){
       var rowSize;
       
       if(isNaN(size) === true){
@@ -38,26 +27,11 @@
         rowSize = size;
       }
       
-      ionGalleryConfig.row_size = rowSize;
+      return rowSize;
       
     };
     
-    this.getRowSize = function(){
-      return ionGalleryConfig.row_size;
-    };
-    
-    this.setGallery = function(items){
-      gallery = items;
-      _this.setGalleryLength(items.length);
-    };
-    
-    this.getGallery = function(){
-      return gallery;
-    };
-    
-    this.buildGallery = function(){
-      var items = this.getGallery();
-      var rowSize = this.getRowSize();
+    this.buildGallery = function(items,rowSize){
       var _gallery = [];
       var row = -1;
       var col = 0;
@@ -86,10 +60,5 @@
       
       return _gallery;
     };
-  
-    this.getGridSize = function(){
-      return parseInt((1/this.getRowSize())* 100);
-    };
-    
   }
 })();
