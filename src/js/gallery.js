@@ -5,14 +5,14 @@
     .module('ion-gallery', ['templates'])
     .directive('ionGallery',ionGallery);
 
-  ionGallery.$inject = ['$ionicPlatform','ionGalleryData','ionGalleryConfig'];
+  ionGallery.$inject = ['$ionicPlatform','ionGalleryHelper','ionGalleryConfig'];
 
-  function ionGallery($ionicPlatform,ionGalleryData,ionGalleryConfig) {
+  function ionGallery($ionicPlatform,ionGalleryHelper,ionGalleryConfig) {
     return {
       restrict: 'AE',
       scope:{
         ionGalleryItems: '=ionGalleryItems',
-        ionGalleryRow: '=ionGalleryRow'
+        ionGalleryRowSize: '=?ionGalleryRow'
       },
       controller: controller,
       link:link,
@@ -21,13 +21,12 @@
     };
 
     function controller($scope){
-      ionGalleryData.setGallery($scope.ionGalleryItems);
-      ionGalleryData.setRowSize(parseInt($scope.ionGalleryRow) || ionGalleryConfig.row_size);
+      $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(parseInt($scope.ionGalleryRowSize) || ionGalleryConfig.row_size, $scope.ionGalleryItems.length);
       $scope.actionLabel = ionGalleryConfig.action_label;
 
       var _drawGallery = function(){
-        $scope.items = ionGalleryData.buildGallery();
-        $scope.responsiveGrid = ionGalleryData.getGridSize();
+        $scope.items = ionGalleryHelper.buildGallery($scope.ionGalleryItems,$scope.ionGalleryRowSize);
+        $scope.responsiveGrid = parseInt((1/$scope.ionGalleryRowSize)* 100);
       };
 
       _drawGallery();
@@ -37,7 +36,6 @@
           return $scope.ionGalleryItems.length;
         }, function (newVal, oldVal) {
           if(newVal !== oldVal){
-            ionGalleryData.setGallery($scope.ionGalleryItems);
             _drawGallery();
 
           }

@@ -5,9 +5,9 @@
     .module('ion-gallery')
     .directive('ionSlider',ionSlider);
 
-  ionSlider.$inject = ['$ionicModal','ionGalleryData','$ionicPlatform','$timeout','$ionicScrollDelegate'];
+  ionSlider.$inject = ['$ionicModal','ionGalleryHelper','$ionicPlatform','$timeout','$ionicScrollDelegate'];
 
-  function ionSlider($ionicModal,ionGalleryData,$ionicPlatform,$timeout,$ionicScrollDelegate){
+  function ionSlider($ionicModal,ionGalleryHelper,$ionicPlatform,$timeout,$ionicScrollDelegate){
     
     return {
       restrict: 'A',
@@ -19,7 +19,7 @@
       var lastSlideIndex;
       var currentImage;
       
-      var rowSize = ionGalleryData.getRowSize();
+      var rowSize = $scope.ionGalleryRowSize;
       var zoomStart = false;
           
       $scope.selectedSlide = 1;
@@ -27,19 +27,16 @@
       
       $scope.showImage = function(index) {
         $scope.slides = [];
-        
         currentImage = index;
-        
-        var galleryLength = ionGalleryData.getGalleryLength();
+
+        var galleryLength = $scope.ionGalleryItems.length;
         var previndex = index - 1 < 0 ? galleryLength - 1 : index - 1;
         var nextindex = index + 1 >= galleryLength ? 0 : index + 1;
-
+        
         $scope.slides[0] = $scope.ionGalleryItems[previndex];
         $scope.slides[1] = $scope.ionGalleryItems[index];
         $scope.slides[2] = $scope.ionGalleryItems[nextindex];
         
-        console.log( 'loadSingles: ' + previndex + ' ' + index + ' ' + nextindex);
-
         lastSlideIndex = 1;
         $scope.loadModal();
       };
@@ -51,45 +48,45 @@
         }
 
         var slideToLoad = $scope.slides.length - lastSlideIndex - currentSlideIndex;
-        var galleryLength = ionGalleryData.getGalleryLength();
+        var galleryLength = $scope.ionGalleryItems.length;
         var imageToLoad;
         var slidePosition = lastSlideIndex + '>' + currentSlideIndex;
         
-        console.log( 'loadSingles: ' + slidePosition);
-        
         if(slidePosition === '0>1' || slidePosition === '1>2' || slidePosition === '2>0'){
           currentImage++;
+          
+          if(currentImage >= galleryLength){
+            currentImage = 0;
+          }
+          
           imageToLoad = currentImage + 1;
+          
+          if( imageToLoad >= galleryLength){
+            imageToLoad = 0;
+          }
         }
         else if(slidePosition === '0>2' || slidePosition === '1>0' || slidePosition === '2>1'){
           currentImage--;
+          
+          if(currentImage < 0){
+            currentImage = galleryLength - 1 ;
+          }
+          
           imageToLoad = currentImage - 1;
+          
+          if(imageToLoad < 0){
+            imageToLoad = galleryLength - 1;
+          }
         }
-
-        if( currentImage < 0 ){
-          currentImage = galleryLength - 1;
-        }
-
-        if( currentImage >= galleryLength ){
-          currentImage = 0;
-        }
-
-        if( imageToLoad < 0 ){
-          imageToLoad = galleryLength + imageToLoad;
-        }
-
-        if( imageToLoad >= galleryLength ){
-          imageToLoad = imageToLoad - galleryLength;
-        }
-
+        
         //Clear zoom
         $ionicScrollDelegate.$getByHandle('slide-' + slideToLoad).zoomTo(1);
         
         $scope.slides[slideToLoad] = $scope.ionGalleryItems[imageToLoad];
-        
+
         lastSlideIndex = currentSlideIndex;
       };
-            
+      
       $scope.$on('ZoomStarted', function(e){
         $timeout(function () {
           zoomStart = true;
@@ -178,12 +175,10 @@
       };
 
       scope.$on('$destroy', function() {
-        try{
-          _modal.remove();
-        } catch(err) {
-          console.log(err.message);
-        }
+        _modal.remove();
       });
+      
+      
     }
   }
 })();
