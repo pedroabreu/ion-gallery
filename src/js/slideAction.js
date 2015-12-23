@@ -19,12 +19,7 @@
       var isDoubleTapAction = false;
       
       var pinchZoom = function pinchZoom(){
-        if(getZoomLevel() > 1){
           scope.$emit('ZoomStarted');
-        }
-        else{
-          scope.$emit('ZoomOriginal');
-        }
       };
       
       var imageDoubleTapGesture = function imageDoubleTapGesture(event) {
@@ -52,12 +47,6 @@
             }
           },200);
         }
-      };
-      
-      var getZoomLevel = function() {
-        var match = element[0].getElementsByClassName('scroll')[0].style.webkitTransform.match(/scale\(([^)]+)\)/);
-        
-        return parseFloat(match[1]);
       };
       
       var pinchEvent = $ionicGesture.on('pinch',pinchZoom,element);

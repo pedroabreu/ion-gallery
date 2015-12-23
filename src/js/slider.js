@@ -95,13 +95,6 @@
         
       });
       
-      $scope.$on('ZoomOriginal', function(e){
-        $timeout(function () {
-          _isOriginalSize();
-        },300);
-        
-      });
-      
       $scope.$on('TapEvent', function(e){
         $timeout(function () {
           _onTap();
@@ -175,12 +168,10 @@
       };
 
       scope.$on('$destroy', function() {
-        try{
-          _modal.remove();
-        } catch(err) {
-          console.log(err.message);
-        }
+        _modal.remove();
       });
+      
+      
     }
   }
 })();
