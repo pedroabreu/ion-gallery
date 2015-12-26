@@ -168,6 +168,7 @@
       };
 
       scope.$on('$destroy', function() {
+        if (!_modal) return;
         _modal.remove();
       });
       
