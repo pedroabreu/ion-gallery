@@ -449,10 +449,12 @@
       };
 
       scope.$on('$destroy', function() {
-        _modal.remove();
+        try{
+          _modal.remove();
+        } catch(err) {
+          console.log(err.message);
+        }
       });
-      
-      
     }
   }
 })();
