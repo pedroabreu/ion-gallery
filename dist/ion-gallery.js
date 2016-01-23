@@ -23,7 +23,12 @@
 
     function controller($scope) {
       var _drawGallery = function () {
-        $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(parseInt($scope.ionGalleryRowSize) || ionGalleryConfig.row_size, $scope.ionGalleryItems.length);
+        if (ionGalleryConfig.fixed_row_size) {
+          $scope.ionGalleryRowSize = parseInt($scope.ionGalleryRowSize) || ionGalleryConfig.row_size;
+        }
+        else {
+          $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(parseInt($scope.ionGalleryRowSize) || ionGalleryConfig.row_size, $scope.ionGalleryItems.length);
+        }
         $scope.actionLabel = ionGalleryConfig.action_label;
         $scope.items = ionGalleryHelper.buildGallery($scope.ionGalleryItems, $scope.ionGalleryRowSize);
         $scope.responsiveGrid = parseInt((1 / $scope.ionGalleryRowSize) * 100);
@@ -60,7 +65,8 @@
     this.config = {
       action_label: 'Done',
       toggle: true,
-      row_size: 3
+      row_size: 3,
+      fixed_row_size: false
     };
 
     this.$get = function() {
