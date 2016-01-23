@@ -62,7 +62,8 @@ app.config(function(ionGalleryConfigProvider) {
   ionGalleryConfigProvider.setGalleryConfig({
                           action_label: 'Close',
                           toggle: false,
-                          row_size: 3
+                          row_size: 3,
+                          fixed_row_size: false
   });
 });
 ```
@@ -71,7 +72,8 @@ app.config(function(ionGalleryConfigProvider) {
 Default values
 action_label - 'Close' (String)
 toggle - false (Boolean)
-row_zie - 3 (Int)
+row_size - 3 (Int)
+fixed_row_size - false (boolean). If true, thumbnails in gallery will always be sized as if there are "row_size" number of images in a row (even if there aren't).
 ```
 
 - Via markup:
