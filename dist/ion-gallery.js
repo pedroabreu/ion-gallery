@@ -23,12 +23,7 @@
 
     function controller($scope) {
       var _drawGallery = function () {
-        if (ionGalleryConfig.fixed_row_size) {
-          $scope.ionGalleryRowSize = parseInt($scope.ionGalleryRowSize) || ionGalleryConfig.row_size;
-        }
-        else {
-          $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(parseInt($scope.ionGalleryRowSize) || ionGalleryConfig.row_size, $scope.ionGalleryItems.length);
-        }
+        $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(parseInt($scope.ionGalleryRowSize), $scope.ionGalleryItems.length);
         $scope.actionLabel = ionGalleryConfig.action_label;
         $scope.items = ionGalleryHelper.buildGallery($scope.ionGalleryItems, $scope.ionGalleryRowSize);
         $scope.responsiveGrid = parseInt((1 / $scope.ionGalleryRowSize) * 100);
@@ -66,7 +61,7 @@
       action_label: 'Done',
       toggle: true,
       row_size: 3,
-      fixed_row_size: false
+      fixed_row_size: true
     };
 
     this.$get = function() {
@@ -90,19 +85,14 @@
   
   function ionGalleryHelper(ionGalleryConfig) {
     
-    var _this = this;
-
     this.getRowSize = function(size,length){
       var rowSize;
       
-      if(isNaN(size) === true){
-        rowSize = 3;
+      if(isNaN(size) === true || size <= 0){
+        rowSize = ionGalleryConfig.row_size;
       }
-      else if(size > length){
+      else if(size > length && !ionGalleryConfig.fixed_row_size){
         rowSize = length;
-      }
-      else if(size <= 0){
-        rowSize = 1;
       }
       else{
         rowSize = size;

@@ -9,19 +9,14 @@
   
   function ionGalleryHelper(ionGalleryConfig) {
     
-    var _this = this;
-
     this.getRowSize = function(size,length){
       var rowSize;
       
-      if(isNaN(size) === true){
-        rowSize = 3;
+      if(isNaN(size) === true || size <= 0){
+        rowSize = ionGalleryConfig.row_size;
       }
-      else if(size > length){
+      else if(size > length && !ionGalleryConfig.fixed_row_size){
         rowSize = length;
-      }
-      else if(size <= 0){
-        rowSize = 1;
       }
       else{
         rowSize = size;
