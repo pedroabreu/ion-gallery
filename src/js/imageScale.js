@@ -28,17 +28,16 @@
       };
       
       element.bind("load" , function(e){
+        var _this = this;
         if(element.parent()[0].offsetHeight > 0){
           scaleImage(this,element.parent()[0].offsetHeight);
         }
-        else{
-          var _this = this;
-          scope.$watch(function(){
-            return element.parent()[0].offsetHeight;
-          },function(newValue){
-            scaleImage(_this,newValue);
-          });
-        }
+        
+        scope.$watch(function(){
+          return element.parent()[0].offsetHeight;
+        },function(newValue){
+          scaleImage(_this,newValue);
+        });
       });
     }
   }

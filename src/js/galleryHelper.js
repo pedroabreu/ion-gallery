@@ -21,7 +21,7 @@
       else{
         rowSize = size;
       }
-      
+
       return rowSize;
       
     };
