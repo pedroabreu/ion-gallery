@@ -5,9 +5,9 @@
     .module('ion-gallery')
     .directive('ionRowHeight',ionRowHeight);
 
-  ionRowHeight.$inject = [];
+  ionRowHeight.$inject = ['ionGalleryConfig'];
 
-  function ionRowHeight(){
+  function ionRowHeight(ionGalleryConfig){
     
     return {
       restrict: 'A',
@@ -15,14 +15,13 @@
     };
 
     function link(scope, element, attrs) {
-            
       scope.$watch( 
         function(){
-          return element[0].offsetWidth;
+          return scope.ionGalleryRowSize;
         },
-        function(newValue){
+        function(newValue,oldValue){
           if(newValue > 0){
-            element.css('height',newValue * parseInt(scope.$parent.responsiveGrid)/100 + 'px');
+            element.css('height',element[0].offsetWidth * parseInt(scope.responsiveGrid)/100 + 'px');
           }
         });
     }
