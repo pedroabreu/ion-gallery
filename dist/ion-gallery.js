@@ -22,8 +22,10 @@
     };
 
     function controller($scope) {
+      var _rowSize = parseInt($scope.ionGalleryRowSize)
+      
       var _drawGallery = function () {
-        $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(parseInt($scope.ionGalleryRowSize) || ionGalleryConfig.row_size, $scope.ionGalleryItems.length);
+        $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(_rowSize || ionGalleryConfig.row_size, $scope.ionGalleryItems.length);
         $scope.actionLabel = ionGalleryConfig.action_label;
         $scope.items = ionGalleryHelper.buildGallery($scope.ionGalleryItems, $scope.ionGalleryRowSize);
         $scope.responsiveGrid = parseInt((1 / $scope.ionGalleryRowSize) * 100);
@@ -60,7 +62,8 @@
     this.config = {
       action_label: 'Done',
       toggle: true,
-      row_size: 3
+      row_size: 3,
+      fixed_row_size: true
     };
 
     this.$get = function() {
@@ -84,24 +87,19 @@
   
   function ionGalleryHelper(ionGalleryConfig) {
     
-    var _this = this;
-
     this.getRowSize = function(size,length){
       var rowSize;
       
-      if(isNaN(size) === true){
-        rowSize = 3;
+      if(isNaN(size) === true || size <= 0){
+        rowSize = ionGalleryConfig.row_size;
       }
-      else if(size > length){
+      else if(size > length && !ionGalleryConfig.fixed_row_size){
         rowSize = length;
-      }
-      else if(size <= 0){
-        rowSize = 1;
       }
       else{
         rowSize = size;
       }
-      
+
       return rowSize;
       
     };
@@ -167,17 +165,16 @@
       };
       
       element.bind("load" , function(e){
+        var _this = this;
         if(element.parent()[0].offsetHeight > 0){
           scaleImage(this,element.parent()[0].offsetHeight);
         }
-        else{
-          var _this = this;
-          scope.$watch(function(){
-            return element.parent()[0].offsetHeight;
-          },function(newValue){
-            scaleImage(_this,newValue);
-          });
-        }
+        
+        scope.$watch(function(){
+          return element.parent()[0].offsetHeight;
+        },function(newValue){
+          scaleImage(_this,newValue);
+        });
       });
     }
   }
@@ -189,9 +186,9 @@
     .module('ion-gallery')
     .directive('ionRowHeight',ionRowHeight);
 
-  ionRowHeight.$inject = [];
+  ionRowHeight.$inject = ['ionGalleryConfig'];
 
-  function ionRowHeight(){
+  function ionRowHeight(ionGalleryConfig){
     
     return {
       restrict: 'A',
@@ -199,14 +196,13 @@
     };
 
     function link(scope, element, attrs) {
-            
       scope.$watch( 
         function(){
-          return element[0].offsetWidth;
+          return scope.ionGalleryRowSize;
         },
-        function(newValue){
+        function(newValue,oldValue){
           if(newValue > 0){
-            element.css('height',newValue * parseInt(scope.$parent.responsiveGrid)/100 + 'px');
+            element.css('height',element[0].offsetWidth * parseInt(scope.responsiveGrid)/100 + 'px');
           }
         });
     }
