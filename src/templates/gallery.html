@@ -2,11 +2,11 @@
   <div class="row" ng-repeat="item in items track by $index" ion-row-height>
     <div ng-repeat="photo in item track by $index"
          class="col col-{{responsiveGrid}} image-container">
-      
+
       <img ion-image-scale
            ng-src="{{photo.thumb}}"
-           ng-click="showImage({{photo.position}})">
-      
+           ng-click="customCallback ? ionItemCallback({item: photo}) : showImage({{photo.position}})">
+
     </div>
   </div>
   <div ion-slider></div>
