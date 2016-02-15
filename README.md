@@ -55,7 +55,7 @@ UI will reflect changes on the content object passed to the directive. Example o
 
 - Via provider:
 
-Default values in example. 
+Default values in example.
 
 ```
 app.config(function(ionGalleryConfigProvider) {
@@ -87,3 +87,7 @@ Markup overrides provider definitions
 - ion-gallery-toggle: Sets one tap action on slideshow to hide/show subtitles and "Done" button. Default: true
 
           <ion-gallery ion-gallery-items="items" ion-gallery-toggle="false"></ion-gallery>
+
+- ion-item-callback: Overrides the default action with a custom callback when an item is tapped. Default: opens the slider modal
+
+          <ion-gallery ion-gallery-items="items" ion-item-callback="callback(item)"></ion-gallery>

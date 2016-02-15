@@ -12,7 +12,8 @@
       restrict: 'AE',
       scope: {
         ionGalleryItems: '=ionGalleryItems',
-        ionGalleryRowSize: '=?ionGalleryRow'
+        ionGalleryRowSize: '=?ionGalleryRow',
+        ionItemCallback: '&?'
       },
       controller: controller,
       link: link,
@@ -21,8 +22,8 @@
     };
 
     function controller($scope) {
-      var _rowSize = parseInt($scope.ionGalleryRowSize)
-      
+      var _rowSize = parseInt($scope.ionGalleryRowSize);
+
       var _drawGallery = function () {
         $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(_rowSize || ionGalleryConfig.row_size, $scope.ionGalleryItems.length);
         $scope.actionLabel = ionGalleryConfig.action_label;
@@ -41,6 +42,8 @@
           }
         });
       }());
+
+      $scope.customCallback = angular.isFunction($scope.ionItemCallback);
     }
 
     function link(scope, element, attrs) {
