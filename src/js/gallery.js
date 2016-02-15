@@ -43,7 +43,7 @@
         });
       }());
 
-      $scope.customCallback = typeof $scope.ionItemCallback !== 'undefined';
+      $scope.customCallback = angular.isFunction($scope.ionItemCallback);
     }
 
     function link(scope, element, attrs) {
