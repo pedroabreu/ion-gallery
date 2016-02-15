@@ -14,7 +14,7 @@
       scope: {
         ionGalleryItems: '=ionGalleryItems',
         ionGalleryRowSize: '=?ionGalleryRow',
-        ionItemCallback: '&'
+        ionItemCallback: '&?'
       },
       controller: controller,
       link: link,
@@ -44,7 +44,7 @@
         });
       }());
 
-      $scope.customCallback = !!$scope.ionItemCallback;
+      $scope.customCallback = typeof $scope.ionItemCallback !== 'undefined';
     }
 
     function link(scope, element, attrs) {
