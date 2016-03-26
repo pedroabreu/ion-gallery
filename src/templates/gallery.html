@@ -4,7 +4,7 @@
          class="col col-{{responsiveGrid}} image-container">
 
       <img ion-image-scale
-           ng-src="{{photo.thumb || photo.src}}"
+           ng-src="{{photo.thumb}}"
            ng-click="customCallback ? ionItemCallback({item:photo}) : showImage(photo.position)">
 
     </div>
