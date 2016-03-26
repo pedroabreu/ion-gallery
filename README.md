@@ -89,9 +89,9 @@ Markup overrides provider definitions
 
           <ion-gallery ion-gallery-items="items" ion-gallery-toggle="false"></ion-gallery>
 
-- ion-item-callback: Overrides the default action with a custom callback when an item is tapped. Default: opens the slider modal
+- ion-item-action: Overrides the default action when a gallery item is tapped. Default: opens the slider modal
 
-          <ion-gallery ion-gallery-items="items" ion-item-callback="callback(item)"></ion-gallery>
+          <ion-gallery ion-gallery-items="items" ion-item-action="itemAction(item)"></ion-gallery>
 
 - ion-zoom-events: Enable/Disable all zoom events in slider (pinchToZoom, tap and double tap). Default: true
 
