@@ -39,10 +39,6 @@
           col = 0;
         }
 
-        if(!items[i].hasOwnProperty('sub')){
-          items[i].sub = '';
-        }
-
         items[i].position = i;
 
         _gallery[row][col] = items[i];
