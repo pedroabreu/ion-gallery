@@ -13,7 +13,7 @@
       scope: {
         ionGalleryItems: '=ionGalleryItems',
         ionGalleryRowSize: '=?ionGalleryRow',
-        ionItemCallback: '&?'
+        ionItemCallback: '&?ionItemCallback'
       },
       controller: controller,
       link: link,
@@ -43,10 +43,12 @@
         });
       }());
 
-      $scope.customCallback = angular.isFunction($scope.ionItemCallback);
     }
 
     function link(scope, element, attrs) {
+
+      scope.customCallback = angular.isFunction(scope.ionItemCallback) && attrs.hasOwnProperty('ionItemCallback')
+
       scope.ionSliderToggle = attrs.ionGalleryToggle === 'false' ? false : ionGalleryConfig.toggle;
     }
   }

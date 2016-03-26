@@ -73,14 +73,14 @@ Default values
 action_label - 'Close' (String)
 toggle - false (Boolean)
 row_size - 3 (Int)
-fixed_row_size - true (boolean). If true, thumbnails in gallery will always be sized as if there are "row_size" number of images in a row (even if there aren't). If set to false, the row_size will be dynamic until it reaches the set row_size (Ex: if only 1 image it will be renderend in the entire row, if 2 images, both will be rendered in the entire row)
+fixed_row_size - true (boolean). If true, thumbnails in gallery will always be sized as if there are "row_size" number of images in a row (even if there aren't). If set to false, the row_size will be dynamic until it reaches the set row_size (Ex: if only 1 image it will be rendered in the entire row, if 2 images, both will be rendered in the entire row)
 ```
 
 - Via markup:
 
 Markup overrides provider definitions
 
-- ion-gallery-row: Defines number of collums to display. Default 3
+- ion-gallery-row: Defines size of the row. Default to 3 images per row
 
           <ion-gallery ion-gallery-items="items" ion-gallery-row="5"></ion-gallery>
 
