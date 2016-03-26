@@ -3,29 +3,18 @@
   "version": "0.1.14",
   "description": "Ionic gallery directive",
   "main": "gulpfile.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "del": "^1.2.0",
     "gulp": "^3.8.11",
     "gulp-angular-templatecache": "^1.6.0",
     "gulp-concat": "^2.5.2",
     "gulp-jshint": "^1.10.0",
-    "gulp-uglify": "^1.2.0"
-  },
-  "devDependencies": {
-    "gulp": "^3.8.11",
+    "gulp-uglify": "^1.2.0",
     "gulp-ng-annotate": "^0.5.3",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.0.1",
-    "gulp-strip-debug": "^1.0.2",
-    "jasmine-core": "^2.3.4",
-    "karma": "^0.12.36",
-    "karma-chrome-launcher": "^0.1.12",
-    "karma-jasmine": "^0.3.5",
-    "karma-phantomjs-launcher": "^0.2.0",
-    "phantomjs": "^1.9.17"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "gulp-strip-debug": "^1.0.2"
   },
   "keywords": [
     "ionic",

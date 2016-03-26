@@ -8,23 +8,10 @@ var sass = require('gulp-sass');
 var ngAnnotate = require('gulp-ng-annotate');
 var stripDebug = require('gulp-strip-debug');
 var del = require('del');
-var karma = require('karma').server;
 
 gulp.task('default', ['compress','sass'], function() {
   del(['.tmp/'], function (err, paths) {
     console.log('Deleted files/folders:\n', paths.join('\n'));
-  });
-});
-
-/**
-* Test task, run test once and exit
-*/
-gulp.task('test', function(done) {
-  karma.start({
-    configFile: __dirname + '/tests/my.conf.js',
-    singleRun: true
-  }, function() {
-    done();
   });
 });
 
@@ -62,4 +49,3 @@ gulp.task('sass', function () {
         .pipe(sass({outputStyle: 'compressed'}))
         .pipe(gulp.dest('./dist'));
 });
- 
