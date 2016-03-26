@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('ion-gallery', [])
+    .module('ion-gallery', ['templates'])
     .directive('ionGallery', ionGallery);
 
   ionGallery.$inject = ['$ionicPlatform', 'ionGalleryHelper', 'ionGalleryConfig'];
@@ -19,7 +19,7 @@
       controller: controller,
       link: link,
       replace: true,
-      templateUrl: 'templates/gallery.html'
+      templateUrl: 'gallery.html'
     };
 
     function controller($scope) {
@@ -431,7 +431,7 @@
       var _modal;
 
       scope.loadModal = function(){
-        $ionicModal.fromTemplateUrl('templates/slider.html', {
+        $ionicModal.fromTemplateUrl('slider.html', {
           scope: scope,
           animation: 'fade-in'
         }).then(function(modal) {

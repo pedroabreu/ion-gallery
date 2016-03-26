@@ -80,7 +80,7 @@ fixed_row_size - true (boolean). If true, thumbnails in gallery will always be s
 
 Markup overrides provider definitions
 
-- ion-gallery-row: Defines number of collums to display. Default 3
+- ion-gallery-row: Defines number of columns to display. Default 3
 
           <ion-gallery ion-gallery-items="items" ion-gallery-row="5"></ion-gallery>
 
