@@ -25,7 +25,7 @@
       $scope.selectedSlide = 1;
       $scope.hideAll = false;
 
-      $scope.showImage = function(index) {
+      $scope.openSlider = function(index) {
         $scope.slides = [];
         currentImage = index;
 
