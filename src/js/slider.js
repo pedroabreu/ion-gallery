@@ -5,9 +5,9 @@
     .module('ion-gallery')
     .directive('ionSlider',ionSlider);
 
-  ionSlider.$inject = ['$ionicModal','ionGalleryHelper','$ionicPlatform','$timeout','$ionicScrollDelegate'];
+  ionSlider.$inject = ['$ionicModal','$timeout','$ionicScrollDelegate','ionSliderHelper'];
 
-  function ionSlider($ionicModal,ionGalleryHelper,$ionicPlatform,$timeout,$ionicScrollDelegate){
+  function ionSlider($ionicModal,$timeout,$ionicScrollDelegate,ionSliderHelper){
 
     return {
       restrict: 'A',
@@ -24,6 +24,7 @@
 
       $scope.selectedSlide = 1;
       $scope.hideAll = false;
+      $scope.ionZoomEvents = ionSliderHelper.setZoomEvents($scope.ionZoomEvents)
 
       $scope.openSlider = function(index) {
         $scope.slides = [];
@@ -79,8 +80,10 @@
           }
         }
 
-        //Clear zoom
-        $ionicScrollDelegate.$getByHandle('slide-' + slideToLoad).zoomTo(1);
+        if($scope.ionZoomEvents === true){
+          //Clear zoom
+          $ionicScrollDelegate.$getByHandle('slide-' + slideToLoad).zoomTo(1);
+        }
 
         $scope.slides[slideToLoad] = $scope.ionGalleryItems[imageToLoad];
 
@@ -110,9 +113,10 @@
       });
 
       var _onTap = function _onTap(){
-
         if(zoomStart === true){
-          $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).zoomTo(1,true);
+          if($scope.ionZoomEvents === true){
+            $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).zoomTo(1,true);
+          }
 
           $timeout(function () {
             _isOriginalSize();
@@ -130,7 +134,10 @@
 
       var _onDoubleTap = function _onDoubleTap(position){
         if(zoomStart === false){
-          $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).zoomTo(3,true,position.x,position.y);
+          if($scope.ionZoomEvents === true){
+            $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).zoomTo(3,true,position.x,position.y);
+          }
+
           zoomStart = true;
           $scope.hideAll = true;
         }
@@ -153,7 +160,7 @@
         $ionicModal.fromTemplateUrl('slider.html', {
           scope: scope,
           animation: 'fade-in'
-        }).then(function(modal) {
+        }).then(function(modal){
           _modal = modal;
           scope.openModal();
         });

@@ -74,6 +74,7 @@ action_label - 'Close' (String)
 toggle - false (Boolean)
 row_size - 3 (Int)
 fixed_row_size - true (boolean). If true, thumbnails in gallery will always be sized as if there are "row_size" number of images in a row (even if there aren't). If set to false, the row_size will be dynamic until it reaches the set row_size (Ex: if only 1 image it will be rendered in the entire row, if 2 images, both will be rendered in the entire row)
+zoom_events - true (Boolean)
 ```
 
 - Via markup:
@@ -91,3 +92,7 @@ Markup overrides provider definitions
 - ion-item-callback: Overrides the default action with a custom callback when an item is tapped. Default: opens the slider modal
 
           <ion-gallery ion-gallery-items="items" ion-item-callback="callback(item)"></ion-gallery>
+
+- ion-zoom-events: Enable/Disable all zoom events in slider (pinchToZoom, tap and double tap). Default: true
+
+          <ion-gallery ion-gallery-items="items" ion-zoom-events="true"></ion-gallery>
