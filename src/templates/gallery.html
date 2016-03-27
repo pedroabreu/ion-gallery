@@ -4,7 +4,7 @@
          class="col col-{{responsiveGrid}} image-container">
 
       <img ion-image-scale
-           ng-src="{{photo.thumb}}"
+           ng-src="{{photo.thumb || photo.src}}"
            ng-click="customItemAction ? ionItemAction({item: photo}) : openSlider(photo.position)">
 
     </div>
