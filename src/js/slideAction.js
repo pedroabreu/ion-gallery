@@ -15,10 +15,6 @@
     };
 
     function link(scope, element, attrs) {
-      // if(scope.ionZoomEvents === false){
-      //   //Don't attach zoom events
-      //   return;
-      // }
       var isDoubleTapAction = false;
 
       var pinchZoom = function pinchZoom(){
