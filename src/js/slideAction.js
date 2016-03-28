@@ -48,20 +48,25 @@
         }
       };
 
-      var dragDownGesture = function(event){
+      var releaseGesture = function(event){
         scope.$emit('ReleaseEvent');
+      };
+
+      var dragDownGesture = function(event){
+        
       };
 
       var pinchEvent = $ionicGesture.on('pinch',pinchZoom,element);
       var doubleTapEvent = $ionicGesture.on('doubletap', function(e){imageDoubleTapGesture(e);}, element);
       var tapEvent = $ionicGesture.on('tap', imageTapGesture, element);
-      var dragDownEvent = $ionicGesture.on('release', dragDownGesture, element);
+      var releaseEvent = $ionicGesture.on('release', releaseGesture, element);
+      var dragDownEvent = $ionicGesture.on('dragdown', dragDownGesture, element);
 
       scope.$on('$destroy', function() {
         $ionicGesture.off(doubleTapEvent, 'doubletap', imageDoubleTapGesture);
         $ionicGesture.off(tapEvent, 'tap', imageTapGesture);
         $ionicGesture.off(pinchEvent, 'pinch', pinchZoom);
-        $ionicGesture.off(dragDownEvent, 'release', dragDownGesture);
+        $ionicGesture.off(releaseEvent, 'release', releaseGesture);
       });
     }
   }
