@@ -13,7 +13,8 @@
       scope: {
         ionGalleryItems: '=ionGalleryItems',
         ionGalleryRowSize: '=?ionGalleryRow',
-        ionItemCallback: '&?ionItemCallback'
+        ionItemCallback: '&?ionItemCallback',
+        ionZoomEvents: '=?ionZoomEvents'
       },
       controller: controller,
       link: link,
@@ -47,8 +48,7 @@
 
     function link(scope, element, attrs) {
 
-      scope.customCallback = angular.isFunction(scope.ionItemCallback) && attrs.hasOwnProperty('ionItemCallback')
-
+      scope.customCallback = angular.isFunction(scope.ionItemCallback) && attrs.hasOwnProperty('ionItemCallback');
       scope.ionSliderToggle = attrs.ionGalleryToggle === 'false' ? false : ionGalleryConfig.toggle;
     }
   }

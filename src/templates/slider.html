@@ -8,7 +8,7 @@
       <ion-slide ng-repeat="single in slides track by $index">
         <ion-scroll direction="xy"
                     locking="false"
-                    zooming="true"
+                    zooming="{{ionZoomEvents}}"
                     min-zoom="1"
                     scrollbar-x="false"
                     scrollbar-y="false"

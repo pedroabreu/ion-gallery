@@ -12,7 +12,8 @@
       action_label: 'Done',
       toggle: true,
       row_size: 3,
-      fixed_row_size: true
+      fixed_row_size: true,
+      zoom_events: true
     };
 
     this.$get = function() {
