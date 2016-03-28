@@ -48,14 +48,20 @@
         }
       };
 
+      var dragDownGesture = function(event){
+        scope.$emit('ReleaseEvent');
+      };
+
       var pinchEvent = $ionicGesture.on('pinch',pinchZoom,element);
       var doubleTapEvent = $ionicGesture.on('doubletap', function(e){imageDoubleTapGesture(e);}, element);
       var tapEvent = $ionicGesture.on('tap', imageTapGesture, element);
+      var dragDownEvent = $ionicGesture.on('release', dragDownGesture, element);
 
       scope.$on('$destroy', function() {
         $ionicGesture.off(doubleTapEvent, 'doubletap', imageDoubleTapGesture);
         $ionicGesture.off(tapEvent, 'tap', imageTapGesture);
         $ionicGesture.off(pinchEvent, 'pinch', pinchZoom);
+        $ionicGesture.off(dragDownEvent, 'release', dragDownGesture);
       });
     }
   }

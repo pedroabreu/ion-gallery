@@ -90,15 +90,14 @@
         lastSlideIndex = currentSlideIndex;
       };
 
-      $scope.$on('ZoomStarted', function(e){
+      $scope.$on('ZoomStarted', function(event){
         $timeout(function () {
           zoomStart = true;
           $scope.hideAll = true;
         });
-
       });
 
-      $scope.$on('TapEvent', function(e){
+      $scope.$on('TapEvent', function(event){
         $timeout(function () {
           _onTap();
         });
@@ -109,7 +108,20 @@
         $timeout(function () {
           _onDoubleTap(position);
         });
+      });
 
+      $scope.$on('ReleaseEvent',function(event){
+        var releaseObj = $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).getScrollPosition();
+        console.log('1')
+        console.log($ionicScrollDelegate.$getByHandle('slide-0').getScrollPosition());
+        console.log('2')
+        console.log($ionicScrollDelegate.$getByHandle('slide-1').getScrollPosition());
+        console.log('3')
+        console.log($ionicScrollDelegate.$getByHandle('slide-2').getScrollPosition());
+
+        if(releaseObj.top < 0){
+          $scope.closeModal()
+        }
       });
 
       var _onTap = function _onTap(){
