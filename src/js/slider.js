@@ -39,7 +39,7 @@
         $scope.slides[2] = $scope.ionGalleryItems[nextindex];
 
         lastSlideIndex = 1;
-        $scope.loadModal();
+        $scope.openModal();
       };
 
       $scope.slideChanged = function(currentSlideIndex) {
@@ -156,15 +156,12 @@
     function link(scope, element, attrs) {
       var _modal;
 
-      scope.loadModal = function(){
-        $ionicModal.fromTemplateUrl('slider.html', {
-          scope: scope,
-          animation: 'fade-in'
-        }).then(function(modal){
-          _modal = modal;
-          scope.openModal();
-        });
-      };
+      $ionicModal.fromTemplateUrl('slider.html', {
+        scope: scope,
+        animation: 'fade-in'
+      }).then(function(modal){
+        _modal = modal;
+      });
 
       scope.openModal = function() {
         _modal.show();
