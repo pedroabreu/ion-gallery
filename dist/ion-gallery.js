@@ -27,8 +27,8 @@
       var _rowSize = parseInt($scope.ionGalleryRowSize);
 
       var _drawGallery = function () {
-        $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(_rowSize || ionGalleryConfig.row_size, $scope.ionGalleryItems.length);
-        $scope.actionLabel = ionGalleryConfig.action_label;
+        $scope.ionGalleryRowSize = ionGalleryHelper.getRowSize(_rowSize || ionGalleryConfig.get('row_size'), $scope.ionGalleryItems.length);
+        $scope.actionLabel = ionGalleryConfig.get('action_label');
         $scope.items = ionGalleryHelper.buildGallery($scope.ionGalleryItems, $scope.ionGalleryRowSize);
         $scope.responsiveGrid = parseInt((1 / $scope.ionGalleryRowSize) * 100);
       };
@@ -44,12 +44,12 @@
           }
         });
       }());
-
     }
 
     function link(scope, element, attrs) {
       scope.customItemAction = angular.isFunction(scope.ionItemAction) && attrs.hasOwnProperty('ionItemAction');
       scope.ionSliderToggle = attrs.ionGalleryToggle === 'false' ? false : ionGalleryConfig.toggle;
+      ionGalleryConfig.set('modal_animation',attrs.ionModalAnimation || 'none');
     }
   }
 })();
@@ -69,7 +69,14 @@
       toggle: true,
       row_size: 3,
       fixed_row_size: true,
-      zoom_events: true
+      zoom_events: true,
+      modal_animation: 'none',
+      get: function(key){
+        return this[key];
+      },
+      set: function(key,value){
+        this[key] = value;
+      }
     };
 
     this.$get = function() {
@@ -258,14 +265,25 @@
         }
       };
 
+      var releaseGesture = function(event){
+        scope.$emit('ReleaseEvent');
+      };
+
+      var dragDownGesture = function(event){
+        
+      };
+
       var pinchEvent = $ionicGesture.on('pinch',pinchZoom,element);
       var doubleTapEvent = $ionicGesture.on('doubletap', function(e){imageDoubleTapGesture(e);}, element);
       var tapEvent = $ionicGesture.on('tap', imageTapGesture, element);
+      var releaseEvent = $ionicGesture.on('release', releaseGesture, element);
+      var dragDownEvent = $ionicGesture.on('dragdown', dragDownGesture, element);
 
       scope.$on('$destroy', function() {
         $ionicGesture.off(doubleTapEvent, 'doubletap', imageDoubleTapGesture);
         $ionicGesture.off(tapEvent, 'tap', imageTapGesture);
         $ionicGesture.off(pinchEvent, 'pinch', pinchZoom);
+        $ionicGesture.off(releaseEvent, 'release', releaseGesture);
       });
     }
   }
@@ -296,9 +314,9 @@
       var rowSize = $scope.ionGalleryRowSize;
       var zoomStart = false;
 
-      $scope.selectedSlide = 1;
       $scope.hideAll = false;
-      $scope.ionZoomEvents = ionSliderHelper.setZoomEvents($scope.ionZoomEvents)
+      $scope.ionZoomEvents = ionSliderHelper.setZoomEvents($scope.ionZoomEvents);
+      $scope.selectedSlide = 1;
 
       $scope.openSlider = function(index) {
         $scope.slides = [];
@@ -361,29 +379,34 @@
 
         $scope.slides[slideToLoad] = $scope.ionGalleryItems[imageToLoad];
 
-        lastSlideIndex = currentSlideIndex;
+        $scope.selectedSlide = lastSlideIndex = currentSlideIndex;
       };
 
-      $scope.$on('ZoomStarted', function(e){
+      $scope.$on('ZoomStarted', function(event){
         $timeout(function () {
           zoomStart = true;
           $scope.hideAll = true;
         });
-
       });
 
-      $scope.$on('TapEvent', function(e){
+      $scope.$on('TapEvent', function(event){
         $timeout(function () {
           _onTap();
         });
-
       });
 
       $scope.$on('DoubleTapEvent', function(event,position){
         $timeout(function () {
           _onDoubleTap(position);
         });
+      });
 
+      $scope.$on('ReleaseEvent',function(event){
+        var releaseObj = $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).getScrollPosition();
+
+        if(releaseObj.top < 0){
+          $scope.closeModal();
+        }
       });
 
       var _onTap = function _onTap(){
@@ -429,20 +452,32 @@
 
     function link(scope, element, attrs) {
       var _modal;
+      var modalLoaded = false;
 
-      $ionicModal.fromTemplateUrl('slider.html', {
-        scope: scope,
-        animation: 'fade-in'
-      }).then(function(modal){
-        _modal = modal;
-      });
+      scope.loadModal = function(){
+        $ionicModal.fromTemplateUrl('slider.html', {
+          scope: scope,
+          animation: ionSliderHelper.getModalAnimation()
+        }).then(function(modal){
+          _modal = modal;
+          _modal.show();
+          modalLoaded = true;
+        });
+      };
 
       scope.openModal = function() {
-        _modal.show();
+        if(modalLoaded){
+          _modal.show();
+        }
+        else{
+          scope.loadModal();
+        }
       };
 
       scope.closeModal = function() {
-        _modal.hide();
+        _modal.hide().then(function(){
+          scope.selectedSlide = 1;
+        });
       };
 
       scope.$on('$destroy', function() {
@@ -469,11 +504,15 @@
 
     this.setZoomEvents = function setZoomEvents(zoomEvents){
       if (zoomEvents === false){
-        ionGalleryConfig.zoom_events = false;
+        ionGalleryConfig.set('zoom_events',false);
       }
 
-      return ionGalleryConfig.zoom_events;
-    }
+      return ionGalleryConfig.get('zoom_events');
+    };
+
+    this.getModalAnimation = function getModalAnimation(){
+      return ionGalleryConfig.get('modal_animation');
+    };
 
   }
 })();

@@ -11,11 +11,15 @@
 
     this.setZoomEvents = function setZoomEvents(zoomEvents){
       if (zoomEvents === false){
-        ionGalleryConfig.zoom_events = false;
+        ionGalleryConfig.set('zoom_events',false);
       }
 
-      return ionGalleryConfig.zoom_events;
-    }
+      return ionGalleryConfig.get('zoom_events');
+    };
+
+    this.getModalAnimation = function getModalAnimation(){
+      return ionGalleryConfig.get('modal_animation');
+    };
 
   }
 })();

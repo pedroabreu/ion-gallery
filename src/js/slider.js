@@ -22,9 +22,9 @@
       var rowSize = $scope.ionGalleryRowSize;
       var zoomStart = false;
 
-      $scope.selectedSlide = 1;
       $scope.hideAll = false;
-      $scope.ionZoomEvents = ionSliderHelper.setZoomEvents($scope.ionZoomEvents)
+      $scope.ionZoomEvents = ionSliderHelper.setZoomEvents($scope.ionZoomEvents);
+      $scope.selectedSlide = 1;
 
       $scope.openSlider = function(index) {
         $scope.slides = [];
@@ -87,29 +87,34 @@
 
         $scope.slides[slideToLoad] = $scope.ionGalleryItems[imageToLoad];
 
-        lastSlideIndex = currentSlideIndex;
+        $scope.selectedSlide = lastSlideIndex = currentSlideIndex;
       };
 
-      $scope.$on('ZoomStarted', function(e){
+      $scope.$on('ZoomStarted', function(event){
         $timeout(function () {
           zoomStart = true;
           $scope.hideAll = true;
         });
-
       });
 
-      $scope.$on('TapEvent', function(e){
+      $scope.$on('TapEvent', function(event){
         $timeout(function () {
           _onTap();
         });
-
       });
 
       $scope.$on('DoubleTapEvent', function(event,position){
         $timeout(function () {
           _onDoubleTap(position);
         });
+      });
 
+      $scope.$on('ReleaseEvent',function(event){
+        var releaseObj = $ionicScrollDelegate.$getByHandle('slide-'+lastSlideIndex).getScrollPosition();
+
+        if(releaseObj.top < 0){
+          $scope.closeModal();
+        }
       });
 
       var _onTap = function _onTap(){
@@ -155,20 +160,32 @@
 
     function link(scope, element, attrs) {
       var _modal;
+      var modalLoaded = false;
 
-      $ionicModal.fromTemplateUrl('slider.html', {
-        scope: scope,
-        animation: 'fade-in'
-      }).then(function(modal){
-        _modal = modal;
-      });
+      scope.loadModal = function(){
+        $ionicModal.fromTemplateUrl('slider.html', {
+          scope: scope,
+          animation: ionSliderHelper.getModalAnimation()
+        }).then(function(modal){
+          _modal = modal;
+          _modal.show();
+          modalLoaded = true;
+        });
+      };
 
       scope.openModal = function() {
-        _modal.show();
+        if(modalLoaded){
+          _modal.show();
+        }
+        else{
+          scope.loadModal();
+        }
       };
 
       scope.closeModal = function() {
-        _modal.hide();
+        _modal.hide().then(function(){
+          scope.selectedSlide = 1;
+        });
       };
 
       scope.$on('$destroy', function() {

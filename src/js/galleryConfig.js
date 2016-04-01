@@ -13,7 +13,14 @@
       toggle: true,
       row_size: 3,
       fixed_row_size: true,
-      zoom_events: true
+      zoom_events: true,
+      modal_animation: 'none',
+      get: function(key){
+        return this[key];
+      },
+      set: function(key,value){
+        this[key] = value;
+      }
     };
 
     this.$get = function() {
