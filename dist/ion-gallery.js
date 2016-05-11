@@ -20,7 +20,7 @@
       controller: controller,
       link: link,
       replace: true,
-      templateUrl: 'gallery.html'
+      templateUrl: ionGalleryConfig.template_gallery
     };
 
     function controller($scope) {
@@ -66,6 +66,8 @@
   function ionGalleryConfig(){
     this.config = {
       action_label: 'Done',
+      template_gallery: 'gallery.html',
+      template_slider:  'slider.html',
       toggle: true,
       row_size: 3,
       fixed_row_size: true,
@@ -278,9 +280,9 @@
     .module('ion-gallery')
     .directive('ionSlider',ionSlider);
 
-  ionSlider.$inject = ['$ionicModal','$timeout','$ionicScrollDelegate','ionSliderHelper'];
+  ionSlider.$inject = ['$ionicModal','$timeout','$ionicScrollDelegate','ionSliderHelper','ionGalleryConfig'];
 
-  function ionSlider($ionicModal,$timeout,$ionicScrollDelegate,ionSliderHelper){
+  function ionSlider($ionicModal,$timeout,$ionicScrollDelegate,ionSliderHelper,ionGalleryConfig){
 
     controller.$inject = ["$scope"];
     return {
@@ -430,7 +432,7 @@
     function link(scope, element, attrs) {
       var _modal;
 
-      $ionicModal.fromTemplateUrl('slider.html', {
+      $ionicModal.fromTemplateUrl(ionGalleryConfig.template_slider, {
         scope: scope,
         animation: 'fade-in'
       }).then(function(modal){

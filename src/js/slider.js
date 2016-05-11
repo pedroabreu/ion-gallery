@@ -5,9 +5,9 @@
     .module('ion-gallery')
     .directive('ionSlider',ionSlider);
 
-  ionSlider.$inject = ['$ionicModal','$timeout','$ionicScrollDelegate','ionSliderHelper'];
+  ionSlider.$inject = ['$ionicModal','$timeout','$ionicScrollDelegate','ionSliderHelper','ionGalleryConfig'];
 
-  function ionSlider($ionicModal,$timeout,$ionicScrollDelegate,ionSliderHelper){
+  function ionSlider($ionicModal,$timeout,$ionicScrollDelegate,ionSliderHelper,ionGalleryConfig){
 
     return {
       restrict: 'A',
@@ -156,7 +156,7 @@
     function link(scope, element, attrs) {
       var _modal;
 
-      $ionicModal.fromTemplateUrl('slider.html', {
+      $ionicModal.fromTemplateUrl(ionGalleryConfig.template_slider, {
         scope: scope,
         animation: 'fade-in'
       }).then(function(modal){

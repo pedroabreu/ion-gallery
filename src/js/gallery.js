@@ -19,7 +19,7 @@
       controller: controller,
       link: link,
       replace: true,
-      templateUrl: 'gallery.html'
+      templateUrl: ionGalleryConfig.template_gallery
     };
 
     function controller($scope) {
